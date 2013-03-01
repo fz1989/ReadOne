@@ -1,4 +1,0 @@
-ReadOne
-=======
-
-For django server
