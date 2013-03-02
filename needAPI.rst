@@ -17,7 +17,7 @@ Server need api
 * search_usr_info(usr_id):
     或得指定用户usr_id的的信息
 
-* get_all_category(start, end):
+* get_all_category():
     获取所有的分类的信息
 
 * search_cate_items(cate_id):
