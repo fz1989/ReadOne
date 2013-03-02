@@ -3,7 +3,8 @@
 #############
 
 *.py[co]
-
+#tags
+tags
 # Packages
 *.egg
 *.egg-info
