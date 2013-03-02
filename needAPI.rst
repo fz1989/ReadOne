@@ -1,6 +1,6 @@
 Server need api
 ===============
-需要的一些个api，这个只是个大概，还有就是\ **看着不合理的可以直接改了**\""，目测后续还得加。。。P.S:偶就是不一次弄完，啦啦啦啦啦啦啦~
+需要的一些个api，这个只是个大概，还有就是\ **看着不合理的可以直接改了**\，目测后续还得加。。。P.S:偶就是不一次弄完，啦啦啦啦啦啦啦~
 
 * check_usr_pwd(usr_id, usr_pwd):
     大概就是给用户usr_id和usr_pwd,看能不能成功登陆，返回个bool吧~
@@ -18,10 +18,10 @@ Server need api
     或得指定用户usr_id的的信息
 
 * get_all_category(start, end):
-    获取所有的分类的信息。。。。
+    获取所有的分类的信息
 
 * search_cate_items(cate_id):
-    获取指定cate_id的所有item。。。
+    获取指定cate_id的所有item
 
 * usr_get_item(item_id):
     获得指定item的的内容
