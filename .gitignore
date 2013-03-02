@@ -4,6 +4,9 @@
 
 *.py[co]
 
+# vim swp
+*.swp
+
 # Packages
 *.egg
 *.egg-info
