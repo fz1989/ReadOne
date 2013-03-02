@@ -51,14 +51,14 @@ def search_friends(usr_id):
 
 def friends(request):
     response = None
-    if request.method == 'GET':
-        if 'action' in request.GET:
-            action = request.GET['action']
+    if request.method == 'POST':
+        if 'action' in request.POST:
+            action = request.POST['action']
             if (action == 'search'):
-                usr_id = request.GET['usr_id']
+                usr_id = request.POST['usr_id']
                 response = HttpResponse(search_friends(usr_id))
             else:
-                usr_id = request.GET['usr_id']
-                friends_id = request.GET['friends_id']
+                usr_id = request.POST['usr_id']
+                friends_id = request.POST['friends_id']
                 response = HttpResponse(follow_friends(usr_id, friends_id))
     return HttpResponse(response)
