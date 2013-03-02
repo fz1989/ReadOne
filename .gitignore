@@ -5,6 +5,10 @@
 *.py[co]
 #tags
 tags
+
+# vim swp
+*.swp
+
 # Packages
 *.egg
 *.egg-info
