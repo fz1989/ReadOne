@@ -4,8 +4,8 @@ from django.http import HttpResponse
 import json
 
 def get_all_category():
-    return json.dumps([ {'cate_id':'123', 'cate_name':'snake'},
-                        {'cate_id':'234', 'cate_name':'dragon'}])
+    return json.dumps({'resopnse':[ {'cate_id':'123', 'cate_name':'snake'},
+                        {'cate_id':'234', 'cate_name':'dragon'}]})
 
 def search_cate_items(cate_id):
     return json.dumps([ {'item_id':cate_id, 'abstract':'nimeide', 'title':'QNMLGBD'},
