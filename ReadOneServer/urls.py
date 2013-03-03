@@ -26,5 +26,6 @@ urlpatterns = patterns('',
     ('^items/$', items),
     ('^login/$', login),
     ('^rank/$', rank),
-
+    ('^cate/$', cate),
+    ('^cate/sub/(\d+)/$', subcate),
 )
