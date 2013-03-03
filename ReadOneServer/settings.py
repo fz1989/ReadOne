@@ -20,6 +20,10 @@ DATABASES = {
     }
 }
 
+# for mongodb
+from mongoengine import connect
+connect('ReadOne')
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -119,7 +123,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'wikiSpider'
+    'wikiSpider',
+    'userCtl',
 )
 
 # A sample logging configuration. The only tangible logging
