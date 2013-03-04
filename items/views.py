@@ -2,7 +2,7 @@
 #!/usr/bin/env bash
 from django.http import HttpResponse
 import json
-import recommond
+import recommend
 
 def get_all_category():
     return json.dumps({'resopnse':[ {'cate_id':'123', 'cate_name':'snake'},
@@ -31,7 +31,7 @@ def recommond_items(request):
     response = None
     if request.method == 'POST' and 'usr_id' in request.POST:
         usr_id = request.POST['usr_id']
-        response = get_recommond_items(usr_id)
+        response = recommend.get_recommend_items(usr_id)
     return HttpResponse(response)
 
 
