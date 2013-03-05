@@ -9,6 +9,11 @@ class User(Document):
     '''
     usr_name = StringField(max_length=50,required=True,unique=True)
     usr_pwd = StringField(max_length=50,required=True)
+    #follow = list(user id)
+    #rank = int
+    #history = list(item id)
+    #cate_vector = list(int)
+
 
 def delUserDB():
     '''
@@ -81,8 +86,7 @@ def search_usr_info(usr_name):
             print u.usr_name,u.usr_pwd
     '''
     try:
-        u = User.objects(usr_name=usr_name)[0]
-        return u
+        return User.objects(usr_name=usr_name)[0]
     except:
         return None
 
@@ -90,6 +94,12 @@ def search_usr_info(usr_name):
 def del_user(usr_name):
     '''
     del the user
+
+    @return True/False
+        False: the name dont exist
     '''
-    User.objects(usr_name=usr_name).delete()
-    return True
+    try:
+        User.objects(usr_name=usr_name)[0].delete()
+        return True
+    except:
+        return False

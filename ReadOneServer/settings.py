@@ -125,6 +125,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'wikiSpider',
     'userCtl',
+    'itemCtl',
 )
 
 # A sample logging configuration. The only tangible logging
