@@ -39,7 +39,14 @@ def calc_usr_dist(usr_a, usr_b):
     return  vector_mul_sum / math.sqrt(length_vector_a) / math.sqrt(length_vector_b)
 
 def get_items_by_cate_vector(cate_vector):
-    return [1,2,3,4,5]
+    '''
+    @brief: calc the item with the greedy algotithm,first choose the max value int the vector
+            and find the recommend items which the usr hadn't read before.
+            if the num of items reachs the number of we expect,we will stop.Otherwise, we find
+            the next bigger value to do the samething above untill we get expect items or there is no avaliable items.
+    @param cate_vector
+    @return: a list,with all the items
+    '''
 
 
 def get_recommend_by_average():
@@ -70,7 +77,9 @@ def get_recommend_by_usrCF():
             usr_dist_list[other_usr['usr_name']] = dist
 
     sort(usr_dist_list.items(), key=lambda d: d[1])
-    for cate_id in ca
+    '''
+    @todo: get top 10 usr,to calc the cate_vector with their dist and then call get_items_by_cate_vector
+    '''
 
 
 def get_recommend_items():
