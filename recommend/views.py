@@ -63,7 +63,7 @@ class recommend:
             length_vector_b += usr_b[key_b] * usr_b[key_b]
         if length_vector_a == 0 or length_vector_b == 0:
             return 0
-        return  1 - vector_mul_sum / math.sqrt(length_vector_a) / math.sqrt(length_vector_b)
+        return  vector_mul_sum / math.sqrt(length_vector_a) / math.sqrt(length_vector_b)
 
 
     def get_items_by_cate_vector(self, cate_vector):
@@ -114,10 +114,9 @@ class recommend:
                 dist = self.calc_usr_dist(self.usr_info['cate_vector'], self.all_usr_info[other_usr]['cate_vector'])
                 usr_dist_list[other_usr] = dist
 
-        sorted_dist_list = []
-        if len(usr_dist_list) < 10:
-            sorted_dist_list = sorted(usr_dist_list.items(), key=lambda usr_dist_list: usr_dist_list[1])
-        else:
+        sorted_dist_list = sorted(usr_dist_list.items(), key=lambda usr_dist_list: usr_dist_list[1])
+        sorted_dist_list.reverse()
+        if len(usr_dist_list) > 10:
             sorted_dist_list = sorted(usr_dist_list.items(), key=lambda usr_dist_list: usr_dist_list[1])[0:10]
         '''
         @note: get top 10 usr,to calc the cate_vector with their dist and then call get_items_by_cate_vector
@@ -125,16 +124,18 @@ class recommend:
         tot_usr_cnt = 0
         tot_usr_sum = 1
         cate_vector = self.usr_info['cate_vector']
+        sorted_dist_list.reverse
         for top_usr_name, top_usr_dist in sorted_dist_list:
             if tot_usr_cnt == 10:
                 break
             for cate_id in self.all_usr_info[top_usr_name]['cate_vector']:
-                cate_vector[cate_id] = cate_vector[cate_id] + (1 - top_usr_dist) * self.all_usr_info[top_usr_name]['cate_vector'][cate_id]
-                tot_usr_sum = tot_usr_sum + 1 - top_usr_dist
+                cate_vector[cate_id] = cate_vector[cate_id] + (top_usr_dist) * self.all_usr_info[top_usr_name]['cate_vector'][cate_id]
+                tot_usr_sum = tot_usr_sum + top_usr_dist
                 tot_usr_cnt = tot_usr_cnt + 1
 
         for cate_id in cate_vector:
             cate_vector[cate_id] /= tot_usr_sum
+        print cate_vector
         return self.get_items_by_cate_vector(cate_vector)
 
 
