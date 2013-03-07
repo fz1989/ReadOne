@@ -21,7 +21,21 @@ class SimpleTest(TestCase):
         self.client = Client()
         response = self.client.get('/cate/')
         self.assertEqual(response.content, json.dumps({'resopnse':[ {'cate_id':'123', 'cate_name':'snake'},
-                        {'cate_id':'234', 'cate_name':'dragon'}]})
+                        {'cate_id':'234', 'cate_name':'dragon'}]}))
+    def test_items_recommend(self):
+        print 'test_recom'
+        self.client = Client()
+        response = self.client.post('/recommend/', {'usr_id':'fz'})
+        print response.content
 
-)
+    def test_subcate(self):
+        print 'test_subcate'
+        self.client = Client()
+        response = self.client.get('/cate/sub/1212/')
+        print response.content
 
+    def test_items(self):
+        print "test_items"
+        self.client = Client()
+        response = self.client.post('/items/', {'usr_id': 1, 'item_id': 2})
+        print response.content

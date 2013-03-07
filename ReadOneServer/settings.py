@@ -126,7 +126,8 @@ INSTALLED_APPS = (
     'wikiSpider',
     'userCtl',
     'items',
-    'friends'
+    'friends',
+    'recommend'
 )
 
 # A sample logging configuration. The only tangible logging

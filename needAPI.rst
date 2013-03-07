@@ -57,8 +57,3 @@ friendCtl
 
 * follow_find(usr_name, friends_name):
     看usr是不是关注了friend
-
-* add_friends(usr_id, friends_id):
-    添加usr_id和friends_id是好友
-
-* 是不是少个查询好友？？
