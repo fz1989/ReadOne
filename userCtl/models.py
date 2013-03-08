@@ -7,8 +7,8 @@ class User(Document):
     '''
     store all user info
     '''
-    usr_name = StringField(max_length=50,required=True,unique=True)
-    usr_pwd = StringField(max_length=50,required=True)
+    name = StringField(max_length=50,required=True,unique=True)
+    pwd = StringField(max_length=50,required=True)
     #follow = list(user id)
     #rank = int
     #history = list(item id)
@@ -24,43 +24,18 @@ def delUserDB():
     '''
     User.drop_collection()
 
-def regist_usr_account(usr_name, usr_pwd):
+def add_user(name, pwd):
     '''
     reg user
     @return True/False
     '''
     try:
-        User(usr_name=usr_name, usr_pwd=usr_pwd).save()
+        User(name=name, pwd=pwd).save()
         return True
     except:
         return False
 
-def check_usr_pwd(usr_name, usr_pwd):
-    '''
-    check pw
-    @return True/False
-    '''
-    try:
-        userlist = User.objects(usr_name=usr_name)
-        user = userlist[0]
-        if user.usr_pwd == usr_pwd:
-            return True
-        else:
-            return False
-    except:
-        return False
-
-def check_usr_exist(usr_name):
-    '''
-    check user exist
-    @return True/False
-    '''
-    if User.objects(usr_name=usr_name):
-        return True
-    else:
-        return False
-
-def get_all_usr_info():
+def get_all_user_name():
     '''
     get all user info
     
@@ -72,34 +47,29 @@ def get_all_usr_info():
         for u in all_user:
             print u.usr_name,u.usr_pwd
     '''
-    return User.objects()
+    return [user.name for user in User.objects()]
 
-def search_usr_info(usr_name):
+def get_user(name):
     '''
     search user info
 
-    @return userinfo/None
-    
-    @example
-        u = search_usr_info('name')
-        if u:
-            print u.usr_name,u.usr_pwd
+    @return (name,pwd)/None
     '''
     try:
-        return User.objects(usr_name=usr_name)[0]
+        user = User.objects(name=name)[0] 
+        return user.name, user.pwd
     except:
         return None
 
 
-def del_user(usr_name):
+def del_user(name):
     '''
     del the user
 
     @return True/False
-        False: the name dont exist
     '''
     try:
-        User.objects(usr_name=usr_name)[0].delete()
+        User.objects(name=name)[0].delete()
         return True
     except:
         return False
