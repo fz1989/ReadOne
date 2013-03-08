@@ -17,7 +17,4 @@ regist
 ------
     empty
 
-recommend
----------
-    get_items
 
