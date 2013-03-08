@@ -108,9 +108,28 @@ def del_follow(name1,name2):
     except:
         return False
 
+def set_rank(name,rank):
+    '''
+    set rank
+    @return True/False
+    '''
+    try:
+        user = User.objects(name=name)[0]
+        user.rank = rank
+        user.save()
+        return True
+    except:
+        return False
 
-
-
-
+def get_rank(name):
+    '''
+    get rank
+    @return rank/None
+    '''
+    try:
+        user = User.objects(name=name)[0]
+        return rank
+    except:
+        return None
 
 

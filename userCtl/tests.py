@@ -63,6 +63,12 @@ class FollowTest(TestCase):
         self.assertFalse(get_follow('dc1','dc2'))
 
 
+class RankTest(TestCase):
+    def test_rank(self):
+        delUserDB()
+        self.assertTrue(add_user('dc1','123456'))
+        self.assertTrue(set_rank('dc1',10))
+        self.assertEqual(10,get_rank('dc1'))
 
 
 
