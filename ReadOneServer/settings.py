@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     'items',
     'friends',
     'recommend'
+    'itemCtl',
 )
 
 # A sample logging configuration. The only tangible logging

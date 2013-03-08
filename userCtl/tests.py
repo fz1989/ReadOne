@@ -18,6 +18,7 @@ class SimpleTest(TestCase):
         delUserDB()
         self.assertTrue(regist_usr_account('dc','123456'))
         self.assertTrue(del_user('dc'))
+        self.assertFalse(del_user('dc'))
 
     def test_exist_user(self):
         delUserDB()
