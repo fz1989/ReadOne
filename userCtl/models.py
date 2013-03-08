@@ -9,11 +9,9 @@ class User(Document):
     '''
     name = StringField(max_length=50,required=True,unique=True)
     pwd = StringField(max_length=50,required=True)
-    #follow = list(user id)
-    #rank = int
-    #history = list(item id)
-    #cate_vector = list(int)
-
+    follower = ListField(ReferenceField('User'))
+    rank = IntField()
+    history = ListField(DictField())
 
 def delUserDB():
     '''
@@ -39,13 +37,7 @@ def get_all_user_name():
     '''
     get all user info
     
-    @return list
-        each item has name/pwd
-    
-    @example
-        all_user = get_all_usr_info()
-        for u in all_user:
-            print u.usr_name,u.usr_pwd
+    @return user_name_list
     '''
     return [user.name for user in User.objects()]
 
@@ -53,14 +45,14 @@ def get_user(name):
     '''
     search user info
 
-    @return (name,pwd)/None
+    @return (name,pwd,follower_name_list,rank,history)/None
     '''
     try:
         user = User.objects(name=name)[0] 
-        return user.name, user.pwd
+        return user.name, user.pwd, [follower.name for follower in user.follower],\
+            user.rank, user.history
     except:
         return None
-
 
 def del_user(name):
     '''
@@ -73,3 +65,52 @@ def del_user(name):
         return True
     except:
         return False
+
+def add_follow(name1,name2):
+    '''
+    name1 follow name2
+
+    @return:True/False
+    '''
+    try:
+        user1 = User.objects(name=name1)[0]
+        user2 = User.objects(name=name2)[0]
+        assert user2 not in user1.follower
+        user1.follower.append(user2)
+        user1.save()
+        return True
+    except:
+        return False
+
+def get_follow(name1,name2):
+    '''
+    get if name1 follow name2
+    @return:True/False
+    '''
+    try:
+        user1 = User.objects(name=name1)[0]
+        user2 = User.objects(name=name2)[0]
+        return user2 in user1.follower
+    except:
+        return False
+    
+def del_follow(name1,name2):
+    '''
+    name1 del follow name2
+    @return True/False
+    '''
+    try:
+        user1 = User.objects(name=name1)[0]
+        user2 = User.objects(name=name2)[0]
+        user1.follower.remove(user2)
+        user1.save()
+        return True
+    except:
+        return False
+
+
+
+
+
+
+

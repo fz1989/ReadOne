@@ -8,7 +8,7 @@ Replace this with more appropriate tests for your application.
 from django.test import TestCase
 from models import *
 
-class SimpleTest(TestCase):
+class UserTest(TestCase):
     def test_add_user(self):
         delUserDB()
         self.assertTrue(add_user('dc','123456'))
@@ -35,3 +35,37 @@ class SimpleTest(TestCase):
         delUserDB()
         self.assertTrue(add_user('dc','123456'))
         self.assertIsNotNone(get_user('dc'))
+
+class FollowTest(TestCase):
+    def test_add_follow(self):
+        delUserDB()
+        self.assertTrue(add_user('dc1','123456'))
+        self.assertTrue(add_user('dc2','123456'))
+        self.assertTrue(add_follow('dc1','dc2'))
+        self.assertFalse(add_follow('dc1','dc2'))
+
+    def test_del_follow(self):
+        delUserDB()
+        self.assertTrue(add_user('dc1','123456'))
+        self.assertTrue(add_user('dc2','123456'))
+        self.assertTrue(add_follow('dc1','dc2'))
+        self.assertTrue(del_follow('dc1','dc2'))
+        self.assertFalse(del_follow('dc1','dc2'))
+
+    def test_get_follow(self):
+        delUserDB()
+        self.assertTrue(add_user('dc1','123456'))
+        self.assertTrue(add_user('dc2','123456'))
+        self.assertTrue(add_follow('dc1','dc2'))
+        self.assertTrue(get_follow('dc1','dc2'))
+        self.assertFalse(get_follow('dc2','dc1'))
+        self.assertTrue(del_follow('dc1','dc2'))
+        self.assertFalse(get_follow('dc1','dc2'))
+
+
+
+
+
+
+
+
