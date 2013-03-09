@@ -7,13 +7,11 @@ class User(Document):
     '''
     store all user info
     '''
-    usr_name = StringField(max_length=50,required=True,unique=True)
-    usr_pwd = StringField(max_length=50,required=True)
-    #follow = list(user id)
-    #rank = int
-    #history = list(item id)
-    #cate_vector = list(int)
-
+    name = StringField(max_length=50,required=True,unique=True)
+    pwd = StringField(max_length=50,required=True)
+    follower = ListField(ReferenceField('User'))
+    rank = IntField(default=0)
+    history = DictField()
 
 def delUserDB():
     '''
@@ -24,82 +22,139 @@ def delUserDB():
     '''
     User.drop_collection()
 
-def regist_usr_account(usr_name, usr_pwd):
+def add_user(name, pwd):
     '''
     reg user
     @return True/False
     '''
     try:
-        User(usr_name=usr_name, usr_pwd=usr_pwd).save()
+        User(name=name, pwd=pwd).save()
         return True
     except:
         return False
 
-def check_usr_pwd(usr_name, usr_pwd):
-    '''
-    check pw
-    @return True/False
-    '''
-    try:
-        userlist = User.objects(usr_name=usr_name)
-        user = userlist[0]
-        if user.usr_pwd == usr_pwd:
-            return True
-        else:
-            return False
-    except:
-        return False
-
-def check_usr_exist(usr_name):
-    '''
-    check user exist
-    @return True/False
-    '''
-    if User.objects(usr_name=usr_name):
-        return True
-    else:
-        return False
-
-def get_all_usr_info():
+def get_all_user_name():
     '''
     get all user info
     
-    @return list
-        each item has name/pwd
-    
-    @example
-        all_user = get_all_usr_info()
-        for u in all_user:
-            print u.usr_name,u.usr_pwd
+    @return user_name_list
     '''
-    return User.objects()
+    return [user.name for user in User.objects()]
 
-def search_usr_info(usr_name):
+def get_user(name):
     '''
     search user info
 
-    @return userinfo/None
-    
-    @example
-        u = search_usr_info('name')
-        if u:
-            print u.usr_name,u.usr_pwd
+    @return (name,pwd,follower_name_list,rank,history)/None
     '''
     try:
-        return User.objects(usr_name=usr_name)[0]
+        user = User.objects(name=name)[0]
+        return user.name, user.pwd, [u.name for u in user.follower],\
+            user.rank, user.history.keys()
     except:
         return None
 
-
-def del_user(usr_name):
+def del_user(name):
     '''
     del the user
 
     @return True/False
-        False: the name dont exist
     '''
     try:
-        User.objects(usr_name=usr_name)[0].delete()
+        User.objects(name=name)[0].delete()
         return True
     except:
         return False
+
+def add_follow(name1,name2):
+    '''
+    name1 follow name2
+
+    @return:True/False
+    '''
+    try:
+        user1 = User.objects(name=name1)[0]
+        user2 = User.objects(name=name2)[0]
+        assert user2 not in user1.follower
+        user1.follower.append(user2)
+        user1.save()
+        return True
+    except:
+        return False
+
+def get_follow(name1,name2):
+    '''
+    get if name1 follow name2
+    @return:True/False
+    '''
+    try:
+        user1 = User.objects(name=name1)[0]
+        user2 = User.objects(name=name2)[0]
+        return user2 in user1.follower
+    except:
+        return False
+    
+def del_follow(name1,name2):
+    '''
+    name1 del follow name2
+    @return True/False
+    '''
+    try:
+        user1 = User.objects(name=name1)[0]
+        user2 = User.objects(name=name2)[0]
+        user1.follower.remove(user2)
+        user1.save()
+        return True
+    except:
+        return False
+
+def set_rank(name,rank):
+    '''
+    set rank
+    @return True/False
+    '''
+    try:
+        user = User.objects(name=name)[0]
+        user.rank = rank
+        user.save()
+        return True
+    except:
+        return False
+
+def get_rank(name):
+    '''
+    get rank
+    @return rank/None
+    '''
+    try:
+        user = User.objects(name=name)[0]
+        return user.rank
+    except:
+        return None
+
+def set_quality(user_name,item_name,quality):
+    '''
+    add offset to item_name quality
+    @return True/False
+    '''
+    try:
+        user = User.objects(name=user_name)[0]
+        user.history[item_name] = quality
+        user.save()
+        return True
+    except:
+        return False
+
+def get_quality(user_name,item_name):
+    '''
+    get user's item_name quality
+    @return quality/None
+    '''
+    try:
+        user = User.objects(name=user_name)[0]
+        return user.history[item_name]
+    except:
+        return None
+
+
+
