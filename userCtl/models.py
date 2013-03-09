@@ -10,8 +10,8 @@ class User(Document):
     name = StringField(max_length=50,required=True,unique=True)
     pwd = StringField(max_length=50,required=True)
     follower = ListField(ReferenceField('User'))
-    rank = IntField()
-    history = ListField(DictField())
+    rank = IntField(default=0)
+    history = DictField(i)
 
 def delUserDB():
     '''
@@ -49,7 +49,7 @@ def get_user(name):
     '''
     try:
         user = User.objects(name=name)[0] 
-        return user.name, user.pwd, [follower.name for follower in user.follower],\
+        return user.name, user.pwd, user.follower.keys(),\
             user.rank, user.history
     except:
         return None
@@ -128,8 +128,37 @@ def get_rank(name):
     '''
     try:
         user = User.objects(name=name)[0]
-        return rank
+        return user.rank
     except:
         return None
+
+def set_quality(user_name,item_name,offset):
+    '''
+    add offset to item_name quality
+    @return True/False
+    '''
+    try:
+        user = User.objects(name=user_name)[0]
+        if item_name in user.history.keys():
+            user.history[item_name] += offset
+        else:
+            user.history[item_name] = 0
+            user.history[item_name] += offset
+        user.save()
+        return True
+    except:
+        return False
+
+def get_quality(user_name,item_name):
+    '''
+    get user's item_name quality
+    @return quality/None
+    '''
+    try:
+        user = User.objects(name=user_name)[0]
+        return user.history[item_name]
+    except:
+        return None
+
 
 

@@ -66,10 +66,21 @@ class FollowTest(TestCase):
 class RankTest(TestCase):
     def test_rank(self):
         delUserDB()
-        self.assertTrue(add_user('dc1','123456'))
-        self.assertTrue(set_rank('dc1',10))
-        self.assertEqual(10,get_rank('dc1'))
+        self.assertTrue(add_user('dc','123456'))
+        self.assertTrue(set_rank('dc',10))
+        self.assertEqual(10,get_rank('dc'))
+        self.assertIsNone(get_rank('dc1'))
 
+class QualityTest(TestCase):
+    def test_rank(self):
+        delUserDB()
+        self.assertTrue(add_user('dc','123456'))
+        self.assertTrue(set_quality('dc','item1',5))
+        self.assertEqual(5,get_quality('dc','item1'))
+        self.assertTrue(set_quality('dc','item1',5))
+        self.assertEqual(10,get_quality('dc','item1'))
+        self.assertTrue(set_quality('dc','item1',-5))
+        self.assertEqual(5,get_quality('dc','item1'))
 
 
 
