@@ -78,9 +78,9 @@ class QualityTest(TestCase):
         self.assertTrue(set_quality('dc','item1',5))
         self.assertEqual(5,get_quality('dc','item1'))
         self.assertTrue(set_quality('dc','item1',5))
-        self.assertEqual(10,get_quality('dc','item1'))
-        self.assertTrue(set_quality('dc','item1',-5))
         self.assertEqual(5,get_quality('dc','item1'))
+        self.assertTrue(set_quality('dc','item1',10))
+        self.assertEqual(10,get_quality('dc','item1'))
 
 
 

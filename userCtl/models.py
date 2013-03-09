@@ -132,18 +132,14 @@ def get_rank(name):
     except:
         return None
 
-def set_quality(user_name,item_name,offset):
+def set_quality(user_name,item_name,quality):
     '''
     add offset to item_name quality
     @return True/False
     '''
     try:
         user = User.objects(name=user_name)[0]
-        if item_name in user.history.keys():
-            user.history[item_name] += offset
-        else:
-            user.history[item_name] = 0
-            user.history[item_name] += offset
+        user.history[item_name] = quality
         user.save()
         return True
     except:
