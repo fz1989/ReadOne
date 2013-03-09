@@ -11,7 +11,7 @@ class User(Document):
     pwd = StringField(max_length=50,required=True)
     follower = ListField(ReferenceField('User'))
     rank = IntField(default=0)
-    history = DictField(i)
+    history = DictField()
 
 def delUserDB():
     '''
@@ -48,9 +48,9 @@ def get_user(name):
     @return (name,pwd,follower_name_list,rank,history)/None
     '''
     try:
-        user = User.objects(name=name)[0] 
-        return user.name, user.pwd, user.follower.keys(),\
-            user.rank, user.history
+        user = User.objects(name=name)[0]
+        return user.name, user.pwd, [u.name for u in user.follower],\
+            user.rank, user.history.keys()
     except:
         return None
 
