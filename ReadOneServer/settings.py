@@ -127,8 +127,12 @@ INSTALLED_APPS = (
     'userCtl',
     'items',
     'friends',
-    'recommend'
     'itemCtl',
+    'recommend',
+    'competition',
+    'regist',
+    'login',
+    'rank',
 )
 
 # A sample logging configuration. The only tangible logging
