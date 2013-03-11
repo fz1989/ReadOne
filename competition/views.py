@@ -17,6 +17,8 @@ def get_problem_by_item(item_id):
     pass
 
 def fetch_problem(creater):
+    if tot[creater] == 0:
+        return None
     other_usr = competition_dict[creater]
     other_usr_item = search_usr_info(other_usr)['item']
     creater_usr_item = search_usr_info(creater)['item']
@@ -36,6 +38,10 @@ def fetch_problem(creater):
             if len(problems) > 10:
                 problems = problems[0: 10]
                 return problems[0:10]
+    tot[creater] -= 1
+    if tot[creater] == 0:
+        competition_dict.pop(creater)
+
 
     return problems
 
@@ -72,6 +78,7 @@ def join_competition(request):
             creater_id = request.POST['creater_id']
             competition_dict[creater_id] = usr_id
             tot_dict[creater_id] = 2
+            waiting_list.remove(creater_id)
             response = fetch_problem(creater_id)
             return HttpResponse(response)
     else:

@@ -6,7 +6,7 @@ def regist_usr_account(usr_id, usr_pwd):
     return False
 
 
-def check_usr_exist(usr_id,usr_pwd):
+def check_usr_exist(usr_id):
     return False
 
 def regist(request):

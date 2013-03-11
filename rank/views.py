@@ -14,7 +14,7 @@ def rank(request):
     if request.method == 'POST':
         if 'usr_id' in request.POST:
             usr_id = request.POST['usr_id']
-            usr_dict_info = get_all_usr_info()
+            usr_dict_info = json.loads(get_all_usr_info())
             list_all_rank = {}
             for key in usr_dict_info.keys():
                 list_all_rank[key] = usr_dict_info[key]['score']
