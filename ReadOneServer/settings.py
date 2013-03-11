@@ -122,7 +122,11 @@ INSTALLED_APPS = (
     #'wikiSpider'
     'items',
     'friends',
-    'recommend'
+    'recommend',
+    'competition',
+    'regist',
+    'login',
+    'rank',
 )
 
 # A sample logging configuration. The only tangible logging
