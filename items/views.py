@@ -5,7 +5,7 @@ import json
 from recommend.views import *
 
 def get_all_category():
-    return json.dumps({'resopnse':[ {'cate_id':'123', 'cate_name':'snake'},
+    return json.dumps({'response':[ {'cate_id':'123', 'cate_name':'snake'},
                         {'cate_id':'234', 'cate_name':'dragon'}]})
 
 def search_cate_items(cate_id):
@@ -39,10 +39,12 @@ def items(request):
 
 def recommend_items(request):
     response = None
-    if request.method == 'POST' and 'usr_id' in request.POST:
+    if request.method == 'POST' and 'usr_id' in request.POST and 'page_num' in request.POST:
         usr_id = request.POST['usr_id']
+        page_num = int(request.POST['page_num'])
         recom = recommend(usr_id)
         response = recom.get_recommend_items()
+        if re
     return HttpResponse(response)
 
 
