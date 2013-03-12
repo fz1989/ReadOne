@@ -30,7 +30,7 @@ param:
     None
 
 dateType:
-    [{'item_id':1, 'pic_idx':1,'title':'a', 'abstract':'b'}]
+    [{'item_id':1, 'item_pic_idx':1,'title':'a', 'abstract':'b'}]
 
 问答
 ----
@@ -60,6 +60,15 @@ post:
 get:
     a list PicIndex,ProfileName,AchiPoints
 
+url:
+    /rank/
+
+param:
+    usr_id
+
+dataType:
+    [{'usr_pic_idx':1, 'usr_id':'狄仁杰', 'score':15}]
+
 成就 all friends
 ----------------
 post:
@@ -68,6 +77,14 @@ post:
 get:
     PicIndex,ProfileName
 
+url:
+    /friends/
+
+param:
+    usr_id
+
+dataType:
+    [{'friends_pic_idx':1, 'usr_id':'狄仁杰'}]
 
 
 点击阅读条目和HubTile
@@ -78,6 +95,15 @@ post:
 get:
     PicUrl,TitleName,SubTitleName,Time,Content
 
+url:
+    /item/
+
+param:
+    usr_id, item_id
+
+dataType:
+    {'item_id':1, 'pic_url':'www.duomaomao.com', 'title':'fz','sub_title':'duo','text':'nimeide',}
+
 编辑条目
 --------
 post:
@@ -86,10 +112,25 @@ post:
 get:
     None
 
+url:
+    /item/edit
+
+param:
+    usr_id, item_id
+
 点击人名
 --------
 post:
     UserID
 
 get:
-    AchiDetailsItem,ItemPoints
+   a list AchiDetailsItem,ItemPoints
+
+url:
+    /arch/
+
+param:
+    usr_id
+
+dataType:
+    [{'arch_id':'狄仁杰', 'arch_score':'30'}]
