@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.http import Http404
 import json
+from random import randint
 
 waiting_list = []
 ready_list = []
@@ -8,16 +9,26 @@ competition_dict = {}
 tot_dict = {}
 cate_vector = []
 def search_usr_info(usr_id):
-    pass
+    return {'usr_name':'fz','items':[1,2,3]}
 
 def get_problem_by_cate(cate_id):
-    pass
+    return [{'prob_id': 1, 'text':'sdadas', 'question':{'a':1,'b':2,'c':3}, 'answer':'a'},
+            {'prob_id': 2, 'text':'sdadas', 'question':{'a':2,'b':2,'c':4}, 'answer':'b'}]
 
 def get_problem_by_item(item_id):
-    pass
+    if item_id == 1:
+        return [{'prob_id': 3, 'text':'sd3adas', 'question':{'a':1,'b':2,'c':3}, 'answer':'a'},
+            {'prob_id': 4, 'text':'sda4das', 'question':{'a':2,'b':2,'c':4}, 'answer':'b'}]
+    elif item_id == 2:
+        return [{'prob_id': 5, 'text':'sd6adas', 'question':{'a':1,'b':2,'c':3}, 'answer':'c'},
+            {'prob_id': 6, 'text':'sda5das', 'question':{'a':2,'b':2,'c':4}, 'answer':'c'}]
+    else:
+        return [{'prob_id': 7, 'text':'sda7das', 'question':{'a':1,'b':2,'c':3}, 'answer':'b'},
+            {'prob_id': 8, 'text':'sda8das', 'question':{'a':2,'b':2,'c':4}, 'answer':'a'}]
+
 
 def fetch_problem(creater):
-    if tot[creater] == 0:
+    if tot_dict[creater] == 0:
         return None
     other_usr = competition_dict[creater]
     other_usr_item = search_usr_info(other_usr)['item']
@@ -38,8 +49,8 @@ def fetch_problem(creater):
             if len(problems) > 10:
                 problems = problems[0: 10]
                 return problems[0:10]
-    tot[creater] -= 1
-    if tot[creater] == 0:
+    tot_dict[creater] -= 1
+    if tot_dict[creater] == 0:
         competition_dict.pop(creater)
 
 
@@ -107,4 +118,16 @@ def show_competition(request):
         return HttpResponse(response)
     else:
         raise Http404()
+
+def self_test(request):
+    response = []
+    if request.method == 'POST' and 'usr_id' in request.POST:
+        usr_id = request.POST['usr_id']
+        usr_info = search_usr_info(usr_id)
+        usr_item = usr_info['items']
+        for item_id in usr_item:
+            problem = get_problem_by_item(item_id)
+            response.extend(problem)
+        idx = randint(0, len(problem) - 1)
+        return HttpResponse(json.dumps(response[idx]))
 

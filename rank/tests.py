@@ -21,4 +21,8 @@ class SimpleTest(TestCase):
         response = self.client.post('/rank/', {'usr_id':'1'})
         print json.loads(response.content)
 
+    def test_arch_rank(self):
+        self.client = Client()
+        response = self.client.post('/rank/arch/', {'usr_id':'1'})
+        print json.loads(response.content)
 
