@@ -77,7 +77,7 @@ def show_friends(request):
         if 'usr_id' in request.POST:
             usr_id = request.POST['usr_id']
             response = get_all_friends(usr_id)
-            return HttpResponse(json.dumps({'response':response}))
+            return HttpResponse(json.dumps({'response': response}))
         else:
             raise Http404()
     else:

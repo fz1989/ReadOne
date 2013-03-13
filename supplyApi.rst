@@ -27,7 +27,7 @@ get:
     a list (ItemID,PicIndex,TitleName,Abstract)
 
 url:
-    /cate/sub/cate_id
+    /cate/sub/cate_id/
 
 param:
     None
@@ -75,7 +75,7 @@ param:
     usr_id
 
 dataType:
-    [{'usr_pic_idx':1, 'usr_id':'狄仁杰', 'score':15}]
+    ['response': {'usr_pic_idx':1, 'usr_id':'狄仁杰', 'score':15}]
 
 status:
     done
@@ -89,13 +89,13 @@ get:
     PicIndex,ProfileName
 
 url:
-    /friends/show
+    /friends/show/
 
 param:
     usr_id
 
 dataType:
-    [{'usr_pic_idx':1, 'usr_id':'狄仁杰'}]
+    ['response': {'usr_pic_idx':1, 'usr_id':'狄仁杰'}]
 
 status:
     done
@@ -130,7 +130,7 @@ get:
     None
 
 url:
-    /item/edit
+    /item/edit/
 
 param:
     usr_id, item_id, text
@@ -153,4 +153,7 @@ param:
     usr_id
 
 dataType:
-    [{'arch_id':'狄仁杰', 'arch_score':'30'}]
+    ['response' : {'arch_id':'狄仁杰', 'arch_score':'30'}]
+
+status:
+    done

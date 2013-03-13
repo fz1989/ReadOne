@@ -18,6 +18,16 @@ def get_all_usr_info():
         'zmy2':{'usr_name':'zmy', 'score':257,'usr_pic_idx':4}
 
                     })
+def get_usr_arch(usr_id):
+    return [
+            {'arch_id': 111, 'arch_score': 5},
+            {'arch_id': 222, 'arch_score': 15},
+            {'arch_id': '3sda', 'arch_score': 25},
+            {'arch_id': 'sd', 'arch_score': 35},
+            {'arch_id': '12', 'arch_score': 15},
+            {'arch_id': 'wqw', 'arch_score': 115},
+            {'arch_id': '121', 'arch_score': 35}
+        ]
 
 def rank(request):
     if request.method == 'POST':
@@ -39,6 +49,17 @@ def rank(request):
                 unit_dict['usr_pic_idx'] = usr_dict_info[usr_id]['usr_pic_idx']
                 response.append(unit_dict)
             return HttpResponse(json.dumps({'response':response}))
+        else:
+            raise Http404()
+    else:
+        raise Http404()
+
+def arch_rank(request):
+    if request.method == 'POST':
+        if 'usr_id' in request.POST:
+            usr_id = request.POST['usr_id']
+            response = get_usr_arch(usr_id)
+            return HttpResponse(json.dumps({'response' : response}))
         else:
             raise Http404()
     else:
