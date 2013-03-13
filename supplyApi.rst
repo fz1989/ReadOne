@@ -13,7 +13,10 @@ param:
     usr_id
 
 dataType:
-    [{'item_id':1, 'pic_idx': 1, 'title':'a', 'abstract':'b'}]
+    [{'item_id':1, 'item_pic_idx': 1, 'title':'a', 'abstract':'b'}]
+
+status:
+    done
 
 最新动态
 -------
@@ -32,6 +35,8 @@ param:
 dateType:
     [{'item_id':1, 'item_pic_idx':1,'title':'a', 'abstract':'b'}]
 
+status:
+    done
 问答
 ----
 post:
@@ -48,6 +53,9 @@ param:
 
 dateTpye:
     {'prob_id':1, 'text':'sdasdasd', 'question':{'a':1,'b':2,'c':3}, 'answer':'a'}
+
+status:
+    done
 
 挑战
 ----
@@ -69,6 +77,9 @@ param:
 dataType:
     [{'usr_pic_idx':1, 'usr_id':'狄仁杰', 'score':15}]
 
+status:
+    done
+
 成就 all friends
 ----------------
 post:
@@ -78,13 +89,16 @@ get:
     PicIndex,ProfileName
 
 url:
-    /friends/
+    /friends/show
 
 param:
     usr_id
 
 dataType:
-    [{'friends_pic_idx':1, 'usr_id':'狄仁杰'}]
+    [{'usr_pic_idx':1, 'usr_id':'狄仁杰'}]
+
+status:
+    done
 
 
 点击阅读条目和HubTile
@@ -104,6 +118,9 @@ param:
 dataType:
     {'item_id':1, 'pic_url':'www.duomaomao.com', 'title':'fz','sub_title':'duo','text':'nimeide',}
 
+status:
+    done
+
 编辑条目
 --------
 post:
@@ -116,7 +133,10 @@ url:
     /item/edit
 
 param:
-    usr_id, item_id
+    usr_id, item_id, text
+
+status:
+    done
 
 点击人名
 --------
@@ -127,7 +147,7 @@ get:
    a list AchiDetailsItem,ItemPoints
 
 url:
-    /arch/
+    /rank/arch/
 
 param:
     usr_id
