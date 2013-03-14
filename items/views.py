@@ -76,7 +76,7 @@ def edit_items(request):
             item_id = request.POST['item_id'];
             text = request.POST['text']
             update_items(item_id, text)
-            return HttpResponse("Edit OK!")
+            return HttpResponse("OK")
         else:
             raise Http404()
     else:
