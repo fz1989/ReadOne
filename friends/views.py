@@ -20,56 +20,37 @@ def get_all_friends(usr_id):
             {'usr_pic_idx': 6, 'usr_id': 'ren jie di'}
             ]
 
-def search_usr_info(usr_id):
-    return json.dumps({'usr_id': 'fz', 'score': 3600,'arch': 'sdsd','usr_pic_idx': 1})
+def get_usr_info(usr_id):
+    return {'usr_id': 'fz', 'usr_pic_idx': 1}
 
-def update_follow_friends_relationship(usr_id, friends_id):
-    '''
-    two users will become friends if and noly if they follow each other
-    '''
-    if not update_follow(usr_id, friends_id):
-        return None
+def update_follow_friends(usr_id, friends_id):
+    pass
 
-    follow_find(friends_id, usr_id)
-    add_friends(usr_id, friends_id)
-
-
-
-def follow_friends(usr_id, friends_id):
-    '''
-    follow one user and update their follow's info between the two users
-    '''
-    if friens_id not in usr_list:
-        return json.dumps({'Message':'Error: Friends Not Found'})
-    else:
-        if not update_follow_friends_relationship(usr_id, friends_id):
-            return json.dumps({'Message':'Follow Failed!'})
+def follow_friends(request):
+    if request.method == 'POST':
+        if 'usr_id' in request.POST and 'friends_id' in request.POST:
+            usr_id = request.POST['usr_id']
+            friends_id = request.POST['friends_id']
+            update_follow_friends(usr_id, friends_id)
+            return HttpResponse('YES')
         else:
-            return json.dumps({'Message':'Follow Successfully!'})
-
-def search_friends(usr_id):
-    '''
-    just search for one user
-    '''
-    if not usr_id:
-        info = get_all_usr_info()
+            raise Http404()
     else:
-        info = search_usr_info(usr_id)
-    return info
+        raise Http404()
 
-def friends(request):
+
+
+def search_friends(request):
     response = None
     if request.method == 'POST':
-        if 'action' in request.POST:
-            action = request.POST['action']
-            if (action == 'search'):
-                usr_id = request.POST['usr_id']
-                response = HttpResponse(search_friends(usr_id))
-            else:
-                usr_id = request.POST['usr_id']
-                friends_id = request.POST['friends_id']
-                response = HttpResponse(follow_friends(usr_id, friends_id))
-    return HttpResponse(response)
+        if 'usr_id' in request.POST:
+            usr_id = request.POST['usr_id']
+            response = get_usr_info(usr_id)
+            return HttpResponse(json.dumps(response))
+        else:
+            raise Http404()
+    else:
+        raise Http404()
 
 
 def show_friends(request):

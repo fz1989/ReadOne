@@ -16,15 +16,15 @@ class SimpleTest(TestCase):
         """
         self.assertEqual(1 + 1, 2)
 
-    def test_post_search_all(self):
+    def test_post_search(self):
         self.client = Client()
-        response = self.client.post('/friends/', {'action':'search','usr_id':''})
+        response = self.client.post('/friends/search/', {'usr_id':'sdsd'})
         print json.loads(response.content)
 
-    def test_post_search_one(self):
+    def test_post_follow(self):
         self.client = Client()
-        response = self.client.post('/friends/', {'action':'search','usr_id':'12'})
-        print json.loads(response.content)
+        response = self.client.post('/friends/follow/', {'friends_id':'23', 'usr_id':'12'})
+        print response.content
 
     def test_show_friends(self):
         self.client = Client()

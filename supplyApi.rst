@@ -157,3 +157,43 @@ dataType:
 
 status:
     done
+
+搜索好友
+--------
+post:
+    usr_id
+
+get:
+    {'usr_pic_idx':1, 'usr_id':'sang shi'}
+
+url:
+    /friends/search/
+
+param:
+    usr_id
+
+dataType:
+    {'usr_pic_idx':1, 'usr_id':'sang shi'}
+
+status:
+    done
+
+添加好友
+--------
+post:
+    usr_id
+
+get:
+    "YES"
+
+url:
+    /friends/follow/
+
+param:
+    usr_id, friends_id
+
+dataType:
+    'YES'
+
+status:
+    done
