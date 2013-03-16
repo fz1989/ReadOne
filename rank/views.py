@@ -1,5 +1,5 @@
-# Create your views here.
-#!/usr/bin/env bash
+#! /usr/bin/env python
+#coding=utf-8
 from django.http import HttpResponse, Http404
 import json
 def get_all_usr_info():
@@ -20,13 +20,13 @@ def get_all_usr_info():
                     })
 def get_usr_arch(usr_id):
     return [
-            {'arch_id': 111, 'arch_score': 5},
-            {'arch_id': 222, 'arch_score': 15},
-            {'arch_id': '3sda', 'arch_score': 25},
-            {'arch_id': 'sd', 'arch_score': 35},
-            {'arch_id': '12', 'arch_score': 15},
-            {'arch_id': 'wqw', 'arch_score': 115},
-            {'arch_id': '121', 'arch_score': 35}
+            {'arch_id': u'打败丧尸', 'arch_score': 5},
+            {'arch_id': u'击败狄仁杰', 'arch_score': 15},
+            {'arch_id': u'躲猫猫', 'arch_score': 25},
+            {'arch_id': u'猜不到我', 'arch_score': 35},
+            {'arch_id': u'怒被雷劈300回', 'arch_score': 15},
+            {'arch_id': u'重新来过', 'arch_score': 115},
+            {'arch_id': u'卖萌可耻', 'arch_score': 35}
         ]
 
 def rank(request):

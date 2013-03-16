@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+#coding=utf-8
 from django.http import HttpResponse
 from django.http import Http404
 import json
@@ -12,19 +14,19 @@ def search_usr_info(usr_id):
     return {'usr_name':'fz','items':[1,2,3]}
 
 def get_problem_by_cate(cate_id):
-    return [{'prob_id': 1, 'text':'sdadas', 'question':{'a':1,'b':2,'c':3}, 'answer':'a'},
-            {'prob_id': 2, 'text':'sdadas', 'question':{'a':2,'b':2,'c':4}, 'answer':'b'}]
+    return [{'prob_id': 1, 'text':u'狄仁杰', 'question':{'a':1,'b':2,'c':3}, 'answer':'a'},
+            {'prob_id': 2, 'text':u'丧尸', 'question':{'a':2,'b':2,'c':4}, 'answer':'b'}]
 
 def get_problem_by_item(item_id):
     if item_id == 1:
-        return [{'prob_id': 3, 'text':'sd3adas', 'question':{'a':1,'b':2,'c':3}, 'answer':'a'},
-            {'prob_id': 4, 'text':'sda4das', 'question':{'a':2,'b':2,'c':4}, 'answer':'b'}]
+        return [{'prob_id': 3, 'text':u'测试', 'question':{'a':1,'b':2,'c':3}, 'answer':'a'},
+            {'prob_id': 4, 'text':u'样例', 'question':{'a':2,'b':2,'c':4}, 'answer':'b'}]
     elif item_id == 2:
-        return [{'prob_id': 5, 'text':'sd6adas', 'question':{'a':1,'b':2,'c':3}, 'answer':'c'},
-            {'prob_id': 6, 'text':'sda5das', 'question':{'a':2,'b':2,'c':4}, 'answer':'c'}]
+        return [{'prob_id': 5, 'text':u'玩一玩', 'question':{'a':1,'b':2,'c':3}, 'answer':'c'},
+            {'prob_id': 6, 'text':u'不高兴', 'question':{'a':2,'b':2,'c':4}, 'answer':'c'}]
     else:
-        return [{'prob_id': 7, 'text':'sda7das', 'question':{'a':1,'b':2,'c':3}, 'answer':'b'},
-            {'prob_id': 8, 'text':'sda8das', 'question':{'a':2,'b':2,'c':4}, 'answer':'a'}]
+        return [{'prob_id': 7, 'text':u'科比布来恩特', 'question':{'a':1,'b':2,'c':3}, 'answer':'b'},
+            {'prob_id': 8, 'text':u'篮球', 'question':{'a':2,'b':2,'c':4}, 'answer':'a'}]
 
 
 def fetch_problem(creater):
@@ -70,14 +72,15 @@ def create_competition(request):
         if 'usr_id' in request.POST:
             creater = request.POST['usr_id']
             if creater in waiting_list:
-                response = "NOT READY"
+                response = {'response':'NOT READY'}
             elif creater in ready_list:
-                response = fetch_problem(creater)
+                prob_list = fetch_problem(creater)
+                response = {'response':'OK', 'data': prob_list}
                 ready_list.remove(creater)
             else:
                 waiting_list.append(creater)
-                response = "NOT READY"
-            return HttpResponse(response)
+                response = {'response':'NOT READY'}
+            return HttpResponse(json.dumps(response))
     else:
         raise Http404()
 
@@ -91,7 +94,7 @@ def join_competition(request):
             tot_dict[creater_id] = 2
             waiting_list.remove(creater_id)
             response = fetch_problem(creater_id)
-            return HttpResponse(response)
+            return HttpResponse(json.dumps({'response':'OK', 'data':response}))
     else:
         raise Http404()
 

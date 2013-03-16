@@ -1,5 +1,6 @@
 # Create your views here.
-#!/usr/bin/env bash
+#! /usr/bin/env python
+#coding=utf-8
 from django.http import HttpResponse, Http404
 
 def regist_usr_account(usr_id, usr_pwd):

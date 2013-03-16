@@ -1,5 +1,5 @@
-# Create your views here.
-#!/usr/bin/env bash
+#! /usr/bin/env python
+#coding=utf-8
 from django.http import HttpResponse,Http404
 
 def check_usr_pwd(usr_name, usr_pwd):

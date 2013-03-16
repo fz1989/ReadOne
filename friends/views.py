@@ -1,23 +1,23 @@
-# Create your views here.
-#!/usr/bin/env bash
+#! /usr/bin/env python
+#coding=utf-8
 from django.http import HttpResponse, Http404
 import json
 
 user_list = ["a","b","c","d"]
 def get_all_usr_info():
     return json.dumps({
-        'fz':{'usr_id': 'fz', 'score': 3600,'arch': 'sdsd','usr_pic_idx': 1},
-        'dc':{'usr_id': 'dc', 'score': 3600,'arch': 'sdsd','usr_pic_idx': 1},
+        'fz':{'usr_id': 'fz', 'score': 3600,'arch': u'正直','usr_pic_idx': 1},
+        'dc':{'usr_id': 'dc', 'score': 3600,'arch': u'卖萌','usr_pic_idx': 1},
                       })
 
 def get_all_friends(usr_id):
     return [
-            {'usr_pic_idx': 1, 'usr_id': 'di ren jie'},
-            {'usr_pic_idx': 2, 'usr_id': 'jie ren di'},
-            {'usr_pic_idx': 3, 'usr_id': 'di jie ren'},
-            {'usr_pic_idx': 4, 'usr_id': 'jie di ren'},
-            {'usr_pic_idx': 5, 'usr_id': 'ren di jie'},
-            {'usr_pic_idx': 6, 'usr_id': 'ren jie di'}
+            {'usr_pic_idx': 1, 'usr_id': u'狄仁杰'},
+            {'usr_pic_idx': 2, 'usr_id': u'狄杰仁'},
+            {'usr_pic_idx': 3, 'usr_id': u'仁杰狄'},
+            {'usr_pic_idx': 4, 'usr_id': u'仁狄杰'},
+            {'usr_pic_idx': 5, 'usr_id': u'杰仁狄'},
+            {'usr_pic_idx': 6, 'usr_id': u'杰狄人'}
             ]
 
 def get_usr_info(usr_id):
