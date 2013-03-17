@@ -1,14 +1,7 @@
-#! /user/bin/env python
+#! /usr/bin/env python
 #coding=utf-8
 from django.http import HttpResponse, Http404
 import json
-
-user_list = ["a","b","c","d"]
-def get_all_user_info():
-    return json.dumps({
-        'fz':{'user_id': 'fz', 'score': 3600,'arch': u'正直','user_pic_idx': 1},
-        'dc':{'user_id': 'dc', 'score': 3600,'arch': u'卖萌','user_pic_idx': 1},
-                      })
 
 def get_all_friends(user_id):
     return [
@@ -21,7 +14,6 @@ def get_all_friends(user_id):
             ]
 
 def get_user_info(user_id):
-    
     return {'user_id': 'fz', 'user_pic_idx': 1}
 
 def update_follow_friends(user_id, friends_id):

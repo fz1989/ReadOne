@@ -1,9 +1,11 @@
-#! /user/bin/env python
+#! /usr/bin/env python
 #coding=utf-8
 from django.http import HttpResponse
 from django.http import Http404
 import json
 from random import randint
+from userCtl.models import *
+from itemctl.models import *
 
 waiting_list = []
 ready_list = []
@@ -11,7 +13,8 @@ competition_dict = {}
 tot_dict = {}
 cate_vector = []
 def search_user_info(user_id):
-    return {'user_name':'fz','items':[1,2,3]}
+    user_info = get_user(user_id)
+    return {'user_name': user_info[0], 'items': user_info[4]}
 
 def get_problem_by_cate(cate_id):
     return [{'prob_id': 1, 'text':u'狄仁杰', 'question':{'a':1,'b':2,'c':3}, 'answer':'a'},

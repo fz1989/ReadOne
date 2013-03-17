@@ -6,10 +6,10 @@ from userCtl.models import *
 
 def regist(request):
     if request.method == 'POST':
-        if 'usr_id' in request.POST and 'usr_pwd' in request.POST:
-            usr_id = request.POST['usr_id']
-            usr_pwd = request.POST['usr_pwd']
-            if not add_user(usr_id, usr_pwd):
+        if 'user_id' in request.POST and 'user_pwd' in request.POST:
+            user_id = request.POST['user_id']
+            user_pwd = request.POST['user_pwd']
+            if not add_user(user_id, user_pwd):
                 return HttpResponse("NO")
             else:
                 return HttpResponse("YES")
