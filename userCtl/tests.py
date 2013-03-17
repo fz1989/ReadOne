@@ -81,12 +81,12 @@ class QualityTest(TestCase):
     def test_rank(self):
         delUserDB()
         self.assertTrue(add_user('dc','123456'))
-        self.assertTrue(set_quality('dc','item1',5))
-        self.assertEqual(5,get_quality('dc','item1'))
-        self.assertTrue(set_quality('dc','item1',5))
-        self.assertEqual(5,get_quality('dc','item1'))
-        self.assertTrue(set_quality('dc','item1',10))
-        self.assertEqual(10,get_quality('dc','item1'))
+        self.assertTrue(set_quality('dc','cate1',5))
+        self.assertEqual(5,get_quality('dc','cate1'))
+        self.assertTrue(set_quality('dc','cate1',5))
+        self.assertEqual(5,get_quality('dc','cate1'))
+        self.assertTrue(set_quality('dc','cate1',10))
+        self.assertEqual(10,get_quality('dc','cate1'))
 
 
 class ArchiveTest(TestCase):
@@ -97,5 +97,12 @@ class ArchiveTest(TestCase):
         self.assertEqual(10,get_archive('dc','arch'))
         self.assertIsNone(get_archive('dc1','arch1'))
 
+class HistoryTest(TestCase):
+    def test_history(self):
+        delUserDB()
+        self.assertTrue(add_user('dc','123456'))
+        self.assertTrue(set_history('dc','item1',10))
+        self.assertEqual(10,get_history('dc','item1'))
+        self.assertIsNone(get_archive('dc','item2'))
 
 

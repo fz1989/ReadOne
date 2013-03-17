@@ -11,7 +11,8 @@ class User(Document):
     pwd = StringField(max_length=50,required=True)
     follower = ListField(ReferenceField('User'))
     rank = IntField(default=0)
-    history = DictField()
+    quality = DictField()   # for cate
+    history = DictField()   # for item
     archive = DictField()
 
 def delUserDB():
@@ -46,12 +47,12 @@ def get_user(name):
     '''
     search user info
 
-    @return (name,pwd,follower_name_list,rank,history)/None
+    @return (name,pwd,follower_name_list,rank,history,quality,archive)/None
     '''
     try:
         user = User.objects(name=name)[0]
         return user.name, user.pwd, [u.name for u in user.follower],\
-            user.rank, user.history.keys(), user.archive
+            user.rank, user.history.keys(), user.quality, user.archive
     except:
         return None
 
@@ -157,23 +158,47 @@ def get_rank(name):
     except:
         return None
 
-def set_quality(user_name,item_name,quality):
+def set_quality(user_name,cate_name,quality):
     '''
-    add offset to item_name quality
+    set quality to cate_name
     @return True/False
     '''
     try:
         user = User.objects(name=user_name)[0]
-        user.history[item_name] = quality
+        user.quality[cate_name] = quality
         user.save()
         return True
     except:
         return False
 
-def get_quality(user_name,item_name):
+def get_quality(user_name,cate_name):
     '''
-    get user's item_name quality
+    get user's cate_name quality
     @return quality/None
+    '''
+    try:
+        user = User.objects(name=user_name)[0]
+        return user.quality[cate_name]
+    except:
+        return None
+
+def set_history(user_name,item_name,history):
+    '''
+    set history to item_name
+    @return True/False
+    '''
+    try:
+        user = User.objects(name=user_name)[0]
+        user.history[item_name] = history
+        user.save()
+        return True
+    except:
+        return False
+
+def get_history(user_name,item_name):
+    '''
+    get user's item history
+    @return history/None
     '''
     try:
         user = User.objects(name=user_name)[0]

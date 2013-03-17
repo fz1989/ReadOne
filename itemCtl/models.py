@@ -4,6 +4,7 @@ from django.db import models
 # Create your models here.
 from mongoengine import *
 from wikiSpider.models import *
+from random import *
 
 class Problem(Document):
     '''
@@ -18,7 +19,9 @@ class Item(Document):
     '''
     store the item info
     '''
-    title = StringField(max_length=50, required=True, unique=True)
+    title = StringField(max_length=100, required=True, unique=True)
+    sub_title = StringField(max_length=200)
+    pic_index = IntField()
     summary = StringField(max_length=500)
     content = StringField(max_length=5000, required=True)
     problem = ListField(ReferenceField(Problem))
@@ -80,7 +83,7 @@ def del_cate(cate_name):
     except:
         return False
 
-def add_item(item_title, item_summary, item_content, cate_name):
+def add_item(item_title, item_sub_title, pic_index, item_summary, item_content, cate_name):
     '''
     add new cate
 
@@ -88,7 +91,8 @@ def add_item(item_title, item_summary, item_content, cate_name):
     '''
     try:
         cate = Category.objects(cate_name=cate_name)[0]
-        item = Item(title=item_title, summary=item_summary, content=item_content,cate=cate)
+        item = Item(title=item_title, sub_title=item_sub_title, pic_index = pic_index, summary=item_summary, \
+            content=item_content,cate=cate)
         item.save()
         cate.item_list.append(item)
         cate.save()
@@ -100,14 +104,28 @@ def get_item(item_title):
     '''
     get item info from title
 
-    @return (title,summary,content,problem_question_list,cate_name)/None
+    @return (title,pic_index,summary,content,problem_question_list,cate_name,sub_title)/None
     '''
     try:
         item = Item.objects(title=item_title)[0] 
-        return item.title, item.summary, item.content,\
-                [prob.question for prob in item.problem], item.cate.cate_name
+        return item.title, item.pic_index, item.summary, item.content,\
+                [prob.question for prob in item.problem], item.cate.cate_name ,item.sub_title
     except:
         return None
+
+def set_content(item_title, content):
+    '''
+    set content
+    @return True/False
+    '''
+    try:
+        item = Item.objects(title=item_title)[0] 
+        item.content = content
+        item.save()
+        return True
+    except:
+        return False
+    
 
 def del_item(item_title):
     '''
@@ -196,24 +214,3 @@ def init_cate_item(catelist):
     except:
         return False
 
-def search_cate_items(cate_id):
-    '''
-    '''
-    pass
-
-def usr_get_item(item_id):
-    pass
-
-def update_usr_behavior(usr_name, cate_id, offset):
-    pass
-   
-
-def get_item_cate(item_id):
-    pass
-def get_problem_by_item(item_id):
-    pass
-
-def get_problem_by_cate(cate_id):
-    pass
-def get_problem_ralation_info(prob_id):
-    pass

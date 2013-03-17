@@ -8,7 +8,7 @@ Replace this with more appropriate tests for your application.
 
 from django.test import TestCase
 from models import *
-
+from random import *
 catelist = [u'体育',u'军事']
 
 class CategoryTest(TestCase):
@@ -39,23 +39,29 @@ class ItemTest(TestCase):
     def test_add_item(self):
         del_cate_item_prob_DB()
         self.assertTrue(init_cate_item(catelist))
-        self.assertTrue(add_item(u'足球',u'简介',u'正文',catelist[0]))
-        self.assertFalse(add_item(u'足球',u'简介',u'正文',catelist[0]))
-        self.assertFalse(add_item(u'足球',u'简介',u'正文',catelist[1]))
+        self.assertTrue(add_item(u'足球',1,u'简介',u'正文',catelist[0]))
+        self.assertFalse(add_item(u'足球',2,u'简介',u'正文',catelist[0]))
+        self.assertFalse(add_item(u'足球',3,u'简介',u'正文',catelist[1]))
 
     def test_get_item_id(self):
         del_cate_item_prob_DB()
         self.assertTrue(init_cate_item(catelist))
-        self.assertTrue(add_item(u'足球',u'简介',u'正文',catelist[0]))
+        self.assertTrue(add_item(u'足球',1,u'简介',u'正文',catelist[0]))
         self.assertIsNotNone(get_item(u'足球'))
         self.assertIsNone(get_item(u'篮球'))
 
     def test_del_item(self):
         del_cate_item_prob_DB()
         self.assertTrue(init_cate_item(catelist))
-        self.assertTrue(add_item(u'足球',u'简介',u'正文',catelist[0]))
+        self.assertTrue(add_item(u'足球',1,u'简介',u'正文',catelist[0]))
         self.assertTrue(del_item(u'足球'))
         self.assertFalse(del_item(u'足球'))
+
+    def test_set_content(self):
+        del_cate_item_prob_DB()
+        self.assertTrue(init_cate_item(catelist))
+        self.assertTrue(add_item(u'足球',1,u'简介',u'正文',catelist[0]))
+        self.assertTrue(set_content(u'足球',u'正文1111111111111'))
 
 class ProblemTest(TestCase):
     def test_add_prob(self):
@@ -112,3 +118,26 @@ class ModelTest(TestCase):
                 for prob_question in item_info[3]:
                     prob_info = get_prob(item_info[0],prob_question)
                     print 'prob_info', prob_info
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
