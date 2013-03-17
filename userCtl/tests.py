@@ -62,6 +62,12 @@ class FollowTest(TestCase):
         self.assertTrue(del_follow('dc1','dc2'))
         self.assertFalse(get_follow('dc1','dc2'))
 
+class PWDTest(TestCase):
+    def test_pwd(self):
+        delUserDB()
+        self.assertTrue(add_user('dc','123456'))
+        self.assertTrue(set_pwd('dc','1033'))
+        self.assertEqual('1033',get_pwd('dc'))
 
 class RankTest(TestCase):
     def test_rank(self):
@@ -83,6 +89,13 @@ class QualityTest(TestCase):
         self.assertEqual(10,get_quality('dc','item1'))
 
 
+class ArchiveTest(TestCase):
+    def test_archive(self):
+        delUserDB()
+        self.assertTrue(add_user('dc','123456'))
+        self.assertTrue(set_archive('dc','arch',10))
+        self.assertEqual(10,get_archive('dc','arch'))
+        self.assertIsNone(get_archive('dc1','arch1'))
 
 
 

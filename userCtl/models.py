@@ -12,6 +12,7 @@ class User(Document):
     follower = ListField(ReferenceField('User'))
     rank = IntField(default=0)
     history = DictField()
+    archive = DictField()
 
 def delUserDB():
     '''
@@ -50,7 +51,7 @@ def get_user(name):
     try:
         user = User.objects(name=name)[0]
         return user.name, user.pwd, [u.name for u in user.follower],\
-            user.rank, user.history.keys()
+            user.rank, user.history.keys(), user.archive
     except:
         return None
 
@@ -65,6 +66,30 @@ def del_user(name):
         return True
     except:
         return False
+
+def set_pwd(name, pwd):
+    '''
+    set user pwd
+    @return True/False
+    '''
+    try:
+        user = User.objects(name=name)[0]
+        user.pwd = pwd
+        user.save()
+        return True
+    except:
+        return False
+
+def get_pwd(name):
+    '''
+    get user pwd
+    @return pwd/None
+    '''
+    try:
+        user = User.objects(name=name)[0]
+        return user.pwd
+    except:
+        return None
 
 def add_follow(name1,name2):
     '''
@@ -153,6 +178,30 @@ def get_quality(user_name,item_name):
     try:
         user = User.objects(name=user_name)[0]
         return user.history[item_name]
+    except:
+        return None
+
+def set_archive(user_name,arch_name,arch_score):
+    '''
+    set user's arch
+    @return True/False
+    '''
+    try:
+        user = User.objects(name=user_name)[0]
+        user.archive[arch_name] = arch_score
+        user.save()
+        return True
+    except:
+        return False
+
+def get_archive(user_name,arch_name):
+    '''
+    get user's archive
+    @return arch_score/None
+    '''
+    try:
+        user = User.objects(name=user_name)[0]
+        return user.archive[arch_name]
     except:
         return None
 
