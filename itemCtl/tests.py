@@ -39,36 +39,36 @@ class ItemTest(TestCase):
     def test_add_item(self):
         del_cate_item_prob_DB()
         self.assertTrue(init_cate_item(catelist))
-        self.assertTrue(add_item(u'足球',1,u'简介',u'正文',catelist[0]))
-        self.assertFalse(add_item(u'足球',2,u'简介',u'正文',catelist[0]))
-        self.assertFalse(add_item(u'足球',3,u'简介',u'正文',catelist[1]))
+        self.assertTrue(add_item(u'足球',u's',1,u'简介',u'正文',catelist[0]))
+        self.assertFalse(add_item(u'足球',u's',2,u'简介',u'正文',catelist[0]))
+        self.assertFalse(add_item(u'足球',u's',3,u'简介',u'正文',catelist[1]))
 
     def test_get_item_id(self):
         del_cate_item_prob_DB()
         self.assertTrue(init_cate_item(catelist))
-        self.assertTrue(add_item(u'足球',1,u'简介',u'正文',catelist[0]))
+        self.assertTrue(add_item(u'足球',u's',1,u'简介',u'正文',catelist[0]))
         self.assertIsNotNone(get_item(u'足球'))
         self.assertIsNone(get_item(u'篮球'))
 
     def test_del_item(self):
         del_cate_item_prob_DB()
         self.assertTrue(init_cate_item(catelist))
-        self.assertTrue(add_item(u'足球',1,u'简介',u'正文',catelist[0]))
+        self.assertTrue(add_item(u'足球',u's',1,u'简介',u'正文',catelist[0]))
         self.assertTrue(del_item(u'足球'))
         self.assertFalse(del_item(u'足球'))
 
     def test_set_content(self):
         del_cate_item_prob_DB()
         self.assertTrue(init_cate_item(catelist))
-        self.assertTrue(add_item(u'足球',1,u'简介',u'正文',catelist[0]))
+        self.assertTrue(add_item(u'足球',u's',1,u'简介',u'正文',catelist[0]))
         self.assertTrue(set_content(u'足球',u'正文1111111111111'))
 
 class ProblemTest(TestCase):
     def test_add_prob(self):
         del_cate_item_prob_DB()
         self.assertTrue(init_cate_item(catelist))
-        self.assertTrue(add_item(u'足球',u'简介',u'正文',catelist[0]))
-        self.assertTrue(add_item(u'篮球',u'简介',u'正文',catelist[0]))
+        self.assertTrue(add_item(u'足球',u's',1,u'简介',u'正文',catelist[0]))
+        self.assertTrue(add_item(u'篮球',u's',1,u'简介',u'正文',catelist[0]))
         self.assertTrue(add_prob(u'足球',u'问题1',{'A':'11','B':'22','C':'33'},'A'))
         self.assertTrue(add_prob(u'足球',u'问题2',{'A':'11','B':'22','C':'33'},'A'))
         self.assertFalse(add_prob(u'足球',u'问题1',{'A':'11','B':'22','C':'33'},'A'))
@@ -77,7 +77,7 @@ class ProblemTest(TestCase):
     def test_get_prob(self):
         del_cate_item_prob_DB()
         self.assertTrue(init_cate_item(catelist))
-        self.assertTrue(add_item(u'足球',u'简介',u'正文',catelist[0]))
+        self.assertTrue(add_item(u'足球',u's',1,u'简介',u'正文',catelist[0]))
         self.assertTrue(add_prob(u'足球',u'问题1',{'A':'11','B':'22','C':'33'},'A'))
         self.assertIsNotNone(get_prob(u'足球',u'问题1'))
         self.assertIsNone(get_prob(u'足球',u'问题'))
@@ -85,7 +85,7 @@ class ProblemTest(TestCase):
     def test_del_prob(self):
         del_cate_item_prob_DB()
         self.assertTrue(init_cate_item(catelist))
-        self.assertTrue(add_item(u'足球',u'简介',u'正文',catelist[0]))
+        self.assertTrue(add_item(u'足球',u's',1,u'简介',u'正文',catelist[0]))
         self.assertTrue(add_prob(u'足球',u'问题1',{'A':'11','B':'22','C':'33'},'A'))
         self.assertTrue(add_prob(u'足球',u'问题2',{'A':'11','B':'22','C':'33'},'A'))
         self.assertTrue(del_prob(u'足球',u'问题1'))
@@ -97,10 +97,10 @@ class ModelTest(TestCase):
         del_cate_item_prob_DB()
         self.assertTrue(init_cate_item(['cate1','cate2']))
         
-        self.assertTrue(add_item('item1','sum1','cont1','cate1'))
-        self.assertTrue(add_item('item2','sum2','cont2','cate1'))
-        self.assertTrue(add_item('item3','sum3','cont3','cate2'))
-        self.assertTrue(add_item('item4','sum4','cont4','cate2'))
+        self.assertTrue(add_item('item1',u's',1,'sum1','cont1','cate1'))
+        self.assertTrue(add_item('item2',u's',1,'sum2','cont2','cate1'))
+        self.assertTrue(add_item('item3',u's',1,'sum3','cont3','cate2'))
+        self.assertTrue(add_item('item4',u's',1,'sum4','cont4','cate2'))
 
         self.assertTrue(add_prob('item1','prob1',{'A':'11','B':'22','C':'33'},'A'))
         self.assertTrue(add_prob('item1','prob2',{'A':'44','B':'55','C':'66'},'B'))
