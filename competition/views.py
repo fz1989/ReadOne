@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /user/bin/env python
 #coding=utf-8
 from django.http import HttpResponse
 from django.http import Http404
@@ -10,8 +10,8 @@ ready_list = []
 competition_dict = {}
 tot_dict = {}
 cate_vector = []
-def search_usr_info(usr_id):
-    return {'usr_name':'fz','items':[1,2,3]}
+def search_user_info(user_id):
+    return {'user_name':'fz','items':[1,2,3]}
 
 def get_problem_by_cate(cate_id):
     return [{'prob_id': 1, 'text':u'狄仁杰', 'question':{'a':1,'b':2,'c':3}, 'answer':'a'},
@@ -32,11 +32,11 @@ def get_problem_by_item(item_id):
 def fetch_problem(creater):
     if tot_dict[creater] == 0:
         return None
-    other_usr = competition_dict[creater]
-    other_usr_item = search_usr_info(other_usr)['item']
-    creater_usr_item = search_usr_info(creater)['item']
+    other_user = competition_dict[creater]
+    other_user_item = search_user_info(other_user)['item']
+    creater_user_item = search_user_info(creater)['item']
 
-    common_item = list(set(creater_usr_item).intersection(set(other_usr_item)))
+    common_item = list(set(creater_user_item).intersection(set(other_user_item)))
 
     problems = []
     for items in common_item:
@@ -60,17 +60,17 @@ def fetch_problem(creater):
 
 
 
-def update_usr_score(usr_id, score):
+def update_user_score(user_id, score):
     return None
 
-def find_follow(usr_a, usr_b):
+def find_follow(user_a, user_b):
     return True
 
 def create_competition(request):
     response = None
     if request.method == 'POST':
-        if 'usr_id' in request.POST:
-            creater = request.POST['usr_id']
+        if 'user_id' in request.POST:
+            creater = request.POST['user_id']
             if creater in waiting_list:
                 response = {'response':'NOT READY'}
             elif creater in ready_list:
@@ -87,10 +87,10 @@ def create_competition(request):
 def join_competition(request):
     response = None
     if request.method == 'POST':
-        if 'usr_id' in request.POST and 'creater_id' in request.POST:
-            usr_id = request.POST['usr_id']
+        if 'user_id' in request.POST and 'creater_id' in request.POST:
+            user_id = request.POST['user_id']
             creater_id = request.POST['creater_id']
-            competition_dict[creater_id] = usr_id
+            competition_dict[creater_id] = user_id
             tot_dict[creater_id] = 2
             waiting_list.remove(creater_id)
             response = fetch_problem(creater_id)
@@ -101,10 +101,10 @@ def join_competition(request):
 def update_score(request):
     response = None
     if request.method == 'POST':
-        if 'usr_id' in request.POST and 'add_score' in request.POST:
-            usr_id = request.POST['usr_id']
+        if 'user_id' in request.POST and 'add_score' in request.POST:
+            user_id = request.POST['user_id']
             add_score = request.POST['add_score']
-            update_usr_score(usr_id, add_score)
+            update_user_score(user_id, add_score)
             response = "Successfully"
         return HttpResponse(response)
     else:
@@ -113,22 +113,22 @@ def update_score(request):
 def show_competition(request):
     response = []
     if request.method == 'POST':
-        if 'usr_id' in request.POST:
-            usr_id = request.POST['usr_id']
-            for other_usr in waiting_list:
-                if find_follow(other_usr, usr_id) and find_follow(usr_id. other_usr):
-                    response.append(other_usr)
+        if 'user_id' in request.POST:
+            user_id = request.POST['user_id']
+            for other_user in waiting_list:
+                if find_follow(other_user, user_id) and find_follow(user_id. other_user):
+                    response.append(other_user)
         return HttpResponse(response)
     else:
         raise Http404()
 
 def self_test(request):
     response = []
-    if request.method == 'POST' and 'usr_id' in request.POST:
-        usr_id = request.POST['usr_id']
-        usr_info = search_usr_info(usr_id)
-        usr_item = usr_info['items']
-        for item_id in usr_item:
+    if request.method == 'POST' and 'user_id' in request.POST:
+        user_id = request.POST['user_id']
+        user_info = search_user_info(user_id)
+        user_item = user_info['items']
+        for item_id in user_item:
             problem = get_problem_by_item(item_id)
             response.extend(problem)
         idx = randint(0, len(problem) - 1)

@@ -1,45 +1,52 @@
-#! /usr/bin/env python
+#! /user/bin/env python
 #coding=utf-8
 from django.http import HttpResponse
 import json
 from recommend.views import *
 from random import randint
-def get_all_category():
-    return {
-        '1': {'cate_id':'123', 'cate_name':u'蛇'},
-        '2': {'cate_id':'234', 'cate_name':u'马'}
-        }
+from itemCtl.models import *
+from userCtl.models import *
 
 def search_cate_items(cate_id):
-    return ([ 
-        {'item_id': cate_id * 5 % 3, 'item_pic_idx': 1, 'title':u'狄仁杰', 'abstract': u'丧尸向您问好'},
-        {'item_id': cate_id * 7 % 5, 'item_pic_idx': 2, 'title':u'徐褚', 'abstract':u'大改代码三百行'}
-                    ])
+    cate_info = get_cate(cate_id)
+    ret = []
+    for item_name in cate_info[1]:
+        item_info = get_item(item_name)
+        item_dict = {'item_id': item_info[0], 'item_pic_idx': item_info[1], 'title':item_info[0],
+            'abstract': item_info[2]}
+        ret.append(item_dict)
+    return ret
 
-def update_usr_behavior(usr_id, cate_id, value):
-    pass
+def update_user_behavior(user_id, cate_id, value):
+    num = get_quality(user_id, cate_id)
+    num += value
+    set_quality(user_id, cate_id, num)
+
 
 def update_items(item_id, text):
-    pass
+    set_content(item_id, text)
 
 def get_item_info(item_id):
-    return [{'item_id': item_id,'item_pic_idx': int(item_id) % 8, 'title':"a" * int(item_id), 'abstract':"b" * int(item_id)}]
+    item_info = get_item(item_id)
+    item_dict = {'item_id': item_info[0], 'item_pic_idx': item_info[1], 'title':item_info[0],'abstract': item_info[2]}
+    return [item_dict]
 
 def get_item_content(item_id):
-    return {'item_id': item_id, 'item_pic_url': 'www.duomaomao.com', 'title':u'三国杀', 'sub_title': u'闪电', 'text': u'连劈三回'}
+    item_info = get_item(item_id)
+    return {'item_id': item_info[0], 'item_pic_url': 'www.duomaomao.com', 'title':item_info[0],'sub_title': item_info[6], 'text': item_info[3]} 
 
 def get_item_cate(item_id):
-    pass
+    return get_item(item_id)[5]
 
 def items(request):
     resopnse = None
     if request.method == 'POST':
-        if 'usr_id' in request.POST and 'item_id' in request.POST:
-            usr_id = request.POST['usr_id']
+        if 'user_id' in request.POST and 'item_id' in request.POST:
+            user_id = request.POST['user_id']
             item_id = request.POST['item_id']
             response = get_item_content(item_id)
             cate_id = get_item_cate(item_id)
-            update_usr_behavior(usr_id, cate_id, 1)
+            update_user_behavior(user_id, cate_id, 1)
         else:
             raise Http404()
     else:
@@ -48,17 +55,18 @@ def items(request):
 
 def recommend_items(request):
     response = []
-    if request.method == 'POST' and 'usr_id' in request.POST:
-        usr_id = request.POST['usr_id']
-        recom = recommend(usr_id)
+    if request.method == 'POST' and 'user_id' in request.POST:
+        user_id = request.POST['user_id']
+        recom = recommend(user_id)
         item_list = recom.get_recommend_items()
         for item_id in item_list:
             response.extend(get_item_info(item_id))
     return HttpResponse(json.dumps({'response':response}))
 
 def cate(request):
-    response = get_all_category()
-    return HttpResponse(json.dumps(response))
+    pass
+    #response = get_all_category()
+    return HttpResponse("nimeia")
 
 def subcate(request, cate_id):
     try:
@@ -71,12 +79,14 @@ def subcate(request, cate_id):
 
 def edit_items(request):
     if request.method == 'POST':
-        if 'usr_id' in request.POST and 'item_id' in request.POST and 'text' in request.POST:
-            usr_id = request.POST['usr_id']
+        if 'user_id' in request.POST and 'item_id' in request.POST and 'text' in request.POST:
+            user_id = request.POST['user_id']
             item_id = request.POST['item_id'];
             text = request.POST['text']
-            update_items(item_id, text)
-            return HttpResponse("OK")
+            if not update_items(item_id, text):
+                return HttpResponse("OK")
+            else:
+                return HttpResponse('Error')
         else:
             raise Http404()
     else:

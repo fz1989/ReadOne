@@ -15,8 +15,14 @@ class SimpleTest(TestCase):
         """
         self.assertEqual(1 + 1, 2)
 
-    def test_login(self):
+    def test_flogin(self):
         self.client = Client()
-        response = self.client.post('/login/', {'usr_id':'sdsd','usr_pwd':'sdsdaaa'})
+        response = self.client.post('/login/', {'user_id':'sdsd','user_pwd':'sdsdaaa'})
+        print response.content
+        self.assertEqual(response.content, "NO")
+
+    def test_sflogin(self):
+        self.client = Client()
+        response = self.client.post('/login/', {'user_id':'dc','user_pwd':'123456'})
         print response.content
         self.assertEqual(response.content, "YES")

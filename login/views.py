@@ -1,17 +1,18 @@
-#! /usr/bin/env python
+#! /user/bin/env python
 #coding=utf-8
 from django.http import HttpResponse,Http404
+from userCtl.models import *
 
-def check_usr_pwd(usr_name, usr_pwd):
-    return True
+def check_user_pwd(user_name, user_pwd):
+    return user_pwd == get_pwd(user_name)
 
 
 def login(request):
     if request.method == 'POST':
-        if 'usr_id' in request.POST and 'usr_pwd' in request.POST:
-            usr_id = request.POST['usr_id']
-            usr_pwd = request.POST['usr_pwd']
-            if check_usr_pwd(usr_id, usr_pwd):
+        if 'user_id' in request.POST and 'user_pwd' in request.POST:
+            user_id = request.POST['user_id']
+            user_pwd = request.POST['user_pwd']
+            if check_user_pwd(user_id, user_pwd):
                 return HttpResponse("YES")
             else:
                 return HttpResponse("NO")

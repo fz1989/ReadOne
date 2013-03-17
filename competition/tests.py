@@ -17,5 +17,5 @@ class SimpleTest(TestCase):
 
     def test_self_test(self):
         self.client = Client()
-        response = self.client.post('/competition/', {'usr_id':'fz'})
+        response = self.client.post('/competition/', {'user_id':'fz'})
         print response.content

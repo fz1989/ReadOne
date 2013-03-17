@@ -24,7 +24,7 @@ class SimpleTest(TestCase):
     def test_items_recommend(self):
         print 'test_recom'
         self.client = Client()
-        response = self.client.post('/recommend/', {'usr_id':'fz'})
+        response = self.client.post('/recommend/', {'user_id':'fz'})
         print json.loads(response.content)
 
     def test_subcate(self):
@@ -36,11 +36,11 @@ class SimpleTest(TestCase):
     def test_items(self):
         print "test_items"
         self.client = Client()
-        response = self.client.post('/items/', {'usr_id': 1, 'item_id': 2})
+        response = self.client.post('/items/', {'user_id': 1, 'item_id': 2})
         print json.loads(response.content)
 
     def test_edit(self):
         print "test_edit"
         self.client = Client()
-        response = self.client.post('/items/edit/', {'usr_id': 'fz', 'item_id':'1', 'text':'aaaa'})
+        response = self.client.post('/items/edit/', {'user_id': 'fz', 'item_id':'1', 'text':'aaaa'})
         print response.content
