@@ -1,7 +1,7 @@
 todoList
 ========
 
-item
+items
 ----
 done
 
@@ -14,4 +14,14 @@ regist
 ------
 done
 
+friends
+-------
+done
 
+rank
+----
+done
+
+recommmend
+----------
+done

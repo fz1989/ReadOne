@@ -5,7 +5,7 @@ from django.http import Http404
 import json
 from random import randint
 from userCtl.models import *
-from itemctl.models import *
+from itemCtl.models import *
 
 waiting_list = []
 ready_list = []
@@ -17,19 +17,24 @@ def search_user_info(user_id):
     return {'user_name': user_info[0], 'items': user_info[4]}
 
 def get_problem_by_cate(cate_id):
-    return [{'prob_id': 1, 'text':u'狄仁杰', 'question':{'a':1,'b':2,'c':3}, 'answer':'a'},
-            {'prob_id': 2, 'text':u'丧尸', 'question':{'a':2,'b':2,'c':4}, 'answer':'b'}]
+    ret = []
+    item_list = get_cate(cate_id)[1]
+    for item_id in item_list:
+        prob_name_list = get_item(item_id)[4]
+        for prob in prob_ame_list:
+            prob_info = get_prob(item_id,prob)
+            ret.append({'prob_id': prob_info[1], 'text': prob_info[1], 'question': prob_info[2],
+                'answer': prob_info[3]})
+
+    return ret
 
 def get_problem_by_item(item_id):
-    if item_id == 1:
-        return [{'prob_id': 3, 'text':u'测试', 'question':{'a':1,'b':2,'c':3}, 'answer':'a'},
-            {'prob_id': 4, 'text':u'样例', 'question':{'a':2,'b':2,'c':4}, 'answer':'b'}]
-    elif item_id == 2:
-        return [{'prob_id': 5, 'text':u'玩一玩', 'question':{'a':1,'b':2,'c':3}, 'answer':'c'},
-            {'prob_id': 6, 'text':u'不高兴', 'question':{'a':2,'b':2,'c':4}, 'answer':'c'}]
-    else:
-        return [{'prob_id': 7, 'text':u'科比布来恩特', 'question':{'a':1,'b':2,'c':3}, 'answer':'b'},
-            {'prob_id': 8, 'text':u'篮球', 'question':{'a':2,'b':2,'c':4}, 'answer':'a'}]
+    ret = []
+    prob_name_list = get_item(item_id)[4]
+    for prob in prob_ame_list:
+        prob_info = get_prob(item_id,prob)
+        ret.append({'prob_id': prob_info[1], 'text': prob_info[1], 'question': prob_info[2], 'answer': prob_info[3]})
+    return ret
 
 
 def fetch_problem(creater):
@@ -64,10 +69,11 @@ def fetch_problem(creater):
 
 
 def update_user_score(user_id, score):
-    return None
+    set_rank(user_id, get_rank(user_id) + score)
+
 
 def find_follow(user_a, user_b):
-    return True
+    return get_follow(user_a, user_b)
 
 def create_competition(request):
     response = None
