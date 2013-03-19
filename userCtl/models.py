@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 from mongoengine import *
+from random import *
 
 class User(Document):
     '''
@@ -47,12 +48,13 @@ def get_user(name):
     '''
     search user info
 
-    @return (name,pwd,follower_name_list,rank,history,quality,archive)/None
+    @return (name,pwd,follower_name_list,rank,history,quality,archive,pic_index)/None
     '''
     try:
         user = User.objects(name=name)[0]
         return user.name, user.pwd, [u.name for u in user.follower],\
-            user.rank, user.history.keys(), user.quality, user.archive
+            user.rank, user.history.keys(), user.quality, user.archive,\
+            randint(1,8)
     except:
         return None
 
@@ -229,6 +231,4 @@ def get_archive(user_name,arch_name):
         return user.archive[arch_name]
     except:
         return None
-
-
 
