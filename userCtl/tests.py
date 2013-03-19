@@ -13,7 +13,7 @@ class UserTest(TestCase):
         delUserDB()
         self.assertTrue(add_user('dc','123456'))
         self.assertFalse(add_user('dc','123456'))
-        
+
     def test_del_user(self):
         delUserDB()
         self.assertTrue(add_user('dc','123456'))
