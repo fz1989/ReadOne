@@ -39,7 +39,7 @@ def get_item_cate(item_id):
     return get_item(item_id)[5]
 
 def items(request):
-    resopnse = None
+    response = None
     if request.method == 'POST':
         if 'user_id' in request.POST and 'item_id' in request.POST:
             user_id = request.POST['user_id']
@@ -64,9 +64,13 @@ def recommend_items(request):
     return HttpResponse(json.dumps({'response':response}))
 
 def cate(request):
-    pass
-    #response = get_all_category()
-    return HttpResponse("nimeia")
+    cate_list = get_all_cate_name()
+    ret = []
+    for cate_id in cate_list:
+        item_list = search_cate_items(cate_id)
+        idx = randint(0, len(item_list) - 1)
+        ret.append(item_list[idx])
+    return HttpResponse(json.dumps({'response': ret}))
 
 def subcate(request, cate_id):
     try:
