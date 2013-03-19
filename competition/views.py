@@ -54,6 +54,7 @@ def fetch_problem(creater):
     tot_dict[creater] -= 1
     if tot_dict[creater] == 0:
         competition_dict.pop(creater)
+        tot_dict.pop(creater)
 
 
     return problems
@@ -81,6 +82,23 @@ def create_competition(request):
                 waiting_list.append(creater)
                 response = {'response':'NOT READY'}
             return HttpResponse(json.dumps(response))
+    else:
+        raise Http404()
+
+def cancle_competiton(request):
+    response = None
+    if request.method == 'POST':
+        if 'usr_id' in request.POST:
+            usr_id = request.POST['usr_id']
+            if usr_id in waiting_list:
+                waiting_list.remove(usr_id)
+                competition_dict.pop(creater)
+                tot_dict.pop(creater)
+            elif usr_id in ready_list:
+                return HttpResponse('NO')
+            return HttpResponse('YES')
+        else:
+            raise Http404()
     else:
         raise Http404()
 

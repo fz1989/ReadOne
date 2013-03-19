@@ -5,15 +5,12 @@ import json
 from recommend.views import *
 from random import randint
 def get_all_category():
-    return {
-        '1': {'cate_id':'123', 'cate_name':u'蛇'},
-        '2': {'cate_id':'234', 'cate_name':u'马'}
-        }
+    return [1,2,3,4,5,6,7,8,9,10]
 
 def search_cate_items(cate_id):
     return ([ 
-        {'item_id': cate_id * 5 % 3, 'item_pic_idx': 1, 'title':u'狄仁杰', 'abstract': u'丧尸向您问好'},
-        {'item_id': cate_id * 7 % 5, 'item_pic_idx': 2, 'title':u'徐褚', 'abstract':u'大改代码三百行'}
+        {'item_id': cate_id, 'item_pic_idx': 1, 'title':u'狄仁杰', 'abstract': u'丧尸向您问好'},
+        {'item_id': cate_id, 'item_pic_idx': 2, 'title':u'徐褚', 'abstract':u'大改代码三百行'}
                     ])
 
 def update_usr_behavior(usr_id, cate_id, value):
@@ -57,8 +54,13 @@ def recommend_items(request):
     return HttpResponse(json.dumps({'response':response}))
 
 def cate(request):
-    response = get_all_category()
-    return HttpResponse(json.dumps(response))
+    response = []
+    cate_list = get_all_category()
+    for cate_id in cate_list:
+        item_list = search_cate_items(cate_id)
+        idx = randint(0, len(item_list) - 1)
+        response.append(item_list[idx])
+    return HttpResponse(json.dumps({'response': response}))
 
 def subcate(request, cate_id):
     try:
