@@ -16,12 +16,14 @@ item_dict = {u'科技': 1,
              u'人物': 10}
 def add():
     for cate_name in cate_list:
-        add_cate(cate_name)
+        add_cate(cate_name):
+
     for item in item_list:
-        print item[4]
-        add_item(item[0], item[1], item_dict[item[4]], item[2], item[3],item[4])
+        add_item(item[0], item[1], item_dict[item[4]], item[2], item[3],item[4]):
+
     for prob in prob_list:
-        add_prob(prob[0], prob[1], prob[2],prob[3])
+        add_prob(prob[0], prob[1], prob[2],prob[3]):
+
 
 if __name__ == '__main__':
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ReadOneServer.settings")
