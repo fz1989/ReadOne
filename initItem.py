@@ -21,7 +21,7 @@ def add():
         print item[4]
         add_item(item[0], item[1], item_dict[item[4]], item[2], item[3],item[4])
     for prob in prob_list:
-        add_prob(prob)
+        add_prob(prob[0], prob[1], prob[2],prob[3])
 
 if __name__ == '__main__':
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ReadOneServer.settings")
