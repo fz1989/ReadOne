@@ -110,7 +110,7 @@ def get_item(item_title):
         item = Item.objects(title=item_title)[0] 
         return item.title, item.pic_index, item.summary, item.content,\
                 [prob.question for prob in item.problem], item.cate.cate_name,\
-                item.sub_title,item.id
+                item.sub_title,str(item.id)
     except:
         return None
 
