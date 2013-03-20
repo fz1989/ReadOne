@@ -10,6 +10,7 @@ from userCtl.models import *
 def search_cate_items(cate_id):
     cate_info = get_cate(cate_id)
     ret = []
+    print 'cateinfo', cate_info
     for item_name in cate_info[1]:
         item_info = get_item(item_name)
         item_dict = {'item_id': item_info[0], 'item_pic_idx': item_info[1], 'title':item_info[0],
@@ -18,6 +19,7 @@ def search_cate_items(cate_id):
     return ret
 
 def update_user_behavior(user_id, cate_id, value):
+    print user_id,cate_id
     num = get_quality(user_id, cate_id)
     num += value
     set_quality(user_id, cate_id, num)

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+#coding=utf-8
 """
 This file demonstrates writing tests using the unittest module. These will pass
 when you run "manage.py test".
@@ -8,6 +10,8 @@ Replace this with more appropriate tests for your application.
 from django.http import HttpResponse
 from django.test import TestCase
 from django.test.client import Client
+from itemCtl.models import *
+from userCtl.models import *
 import json
 
 class SimpleTest(TestCase):
@@ -27,20 +31,25 @@ class SimpleTest(TestCase):
         response = self.client.post('/recommend/', {'user_id':'fz'})
         print json.loads(response.content)
 
-    def test_subcate(self):
-        print 'test_subcate'
-        self.client = Client()
-        response = self.client.get('/cate/sub/1212/')
-        print json.loads(response.content)
-
     def test_items(self):
         print "test_items"
         self.client = Client()
-        response = self.client.post('/items/', {'user_id': 1, 'item_id': 2})
+        response = self.client.post('/items/', {'user_id': 'fz', 'item_id': '史记'})
         print json.loads(response.content)
 
     def test_edit(self):
         print "test_edit"
-        self.client = Client()
-        response = self.client.post('/items/edit/', {'user_id': 'fz', 'item_id':'1', 'text':'aaaa'})
-        print response.content
+        all_cate_name = get_all_cate_name()
+        print 'all_cate_name %s' % all_cate_name
+        for cate_name in all_cate_name:
+            cate_info = get_cate(cate_name)
+            print 'cate_info', cate_info
+           # for item_name in cate_info[1]:
+           #     item_info = get_item(item_name)
+           #     print 'item_info', item_info
+           #     for prob_question in item_info[3]:
+           #         prob_info = get_prob(item_info[0],prob_question)
+           #         print 'prob_info', prob_info
+        #self.client = Client()
+       # response = self.client.post('/items/edit/', {'user_id': 'fz', 'item_id':'1', 'text':'aaaa'})
+       # print response.content

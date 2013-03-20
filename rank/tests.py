@@ -18,11 +18,11 @@ class SimpleTest(TestCase):
 
     def test_rank(self):
         self.client = Client()
-        response = self.client.post('/rank/', {'user_id':'1'})
+        response = self.client.post('/rank/', {'user_id':'fz'})
         print json.loads(response.content)
 
     def test_arch_rank(self):
         self.client = Client()
-        response = self.client.post('/rank/arch/', {'user_id':'1'})
+        response = self.client.post('/rank/arch/', {'user_id':'dc'})
         print json.loads(response.content)
 

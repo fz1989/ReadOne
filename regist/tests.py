@@ -18,13 +18,13 @@ class SimpleTest(TestCase):
 
     def test_basic_regist(self):
         self.client = Client()
-        response = self.client.post('/regist/', {'usr_id':'dc2', 'usr_pwd':'jiumaimeng'})
+        response = self.client.post('/regist/', {'user_id':'dc2', 'user_pwd':'jiumaimeng'})
         print response.content
         self.assertEqual('NO', response.content)
 
     def test_rbasic_regist(self):
         self.client = Client()
-        response = self.client.post('/regist/', {'usr_id':'dc', 'usr_pwd':'jiumaimeng'})
+        response = self.client.post('/regist/', {'user_id':'dc', 'user_pwd':'jiumaimeng'})
         print response.content
         self.assertEqual('NO', response.content)
 

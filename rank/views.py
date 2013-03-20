@@ -11,6 +11,8 @@ def get_all_user_info():
         user_info = get_user(user_name)
         ret[user_info[0]] = {'user_name': user_info[0], 'score': user_info[3], 'user_pic_idx':
                 user_info[7]}
+    return ret
+
 
 def get_user_arch(user_id):
     ret = []

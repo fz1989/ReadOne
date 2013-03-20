@@ -31,7 +31,7 @@ def get_problem_by_cate(cate_id):
 def get_problem_by_item(item_id):
     ret = []
     prob_name_list = get_item(item_id)[4]
-    for prob in prob_ame_list:
+    for prob in prob_name_list:
         prob_info = get_prob(item_id,prob)
         ret.append({'prob_id': prob_info[1], 'text': prob_info[1], 'question': prob_info[2], 'answer': prob_info[3]})
     return ret
