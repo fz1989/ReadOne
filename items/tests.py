@@ -7,7 +7,7 @@ when you run "manage.py test".
 Replace this with more appropriate tests for your application.
 """
 
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.test import TestCase
 from django.test.client import Client
 from itemCtl.models import *
@@ -34,7 +34,7 @@ class SimpleTest(TestCase):
     def test_items(self):
         print "test_items"
         self.client = Client()
-        response = self.client.post('/items/', {'user_id': 'fz', 'item_id': '史记'})
+        response = self.client.post('/items/', {'user_id': 'fz', 'item_id': u'5149a7df18228537058bf7cb'})
         print json.loads(response.content)
 
     def test_edit(self):

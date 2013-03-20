@@ -17,13 +17,13 @@ item_dict = {u'科技': 1,
 def add():
     del_cate_item_prob_DB()
     for cate_name in cate_list:
-        add_cate(cate_name)
+        assert add_cate(cate_name)
 
     for item in item_list:
-        add_item(item[0], item[1], item_dict[item[4]], item[2], item[3],item[4])
+        assert add_item(item[0], item[1], item_dict[item[4]], item[2], item[3],item[4])
 
     for prob in prob_list:
-        add_prob(prob[0], prob[1], prob[2],prob[3])
+        assert add_prob(prob[0], prob[1], prob[2],prob[3])
 
 
 if __name__ == '__main__':

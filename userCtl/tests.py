@@ -87,6 +87,7 @@ class QualityTest(TestCase):
         self.assertEqual(5,get_quality('dc','cate1'))
         self.assertTrue(set_quality('dc','cate1',10))
         self.assertEqual(10,get_quality('dc','cate1'))
+        self.assertEqual(20,10+get_quality('dc','cate1'))
 
 
 class ArchiveTest(TestCase):

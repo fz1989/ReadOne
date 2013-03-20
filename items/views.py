@@ -10,35 +10,34 @@ from userCtl.models import *
 def search_cate_items(cate_id):
     cate_info = get_cate(cate_id)
     ret = []
-    print 'cateinfo', cate_info
     for item_name in cate_info[1]:
         item_info = get_item(item_name)
-        item_dict = {'item_id': item_info[0], 'item_pic_idx': item_info[1], 'title':item_info[0],
+        item_dict = {'item_id': item_info[7], 'item_pic_idx': item_info[1], 'title':item_info[0],
             'abstract': item_info[2]}
         ret.append(item_dict)
     return ret
 
 def update_user_behavior(user_id, cate_id, value):
-    print user_id,cate_id
     num = get_quality(user_id, cate_id)
-    num += value
+    num += int(value)
     set_quality(user_id, cate_id, num)
 
 
-def update_items(item_id, text):
-    set_content(item_id, text)
+def update_items(item_title, text):
+    set_content(item_title, text)
 
-def get_item_info(item_id):
-    item_info = get_item(item_id)
-    item_dict = {'item_id': item_info[0], 'item_pic_idx': item_info[1], 'title':item_info[0],'abstract': item_info[2]}
+def get_item_info(item_title):
+    item_info = get_item(item_title)
+    item_dict = {'item_id': item_info[7], 'item_pic_idx': item_info[1], 'title':item_info[0],'abstract': item_info[2]}
     return [item_dict]
 
 def get_item_content(item_id):
-    item_info = get_item(item_id)
-    return {'item_id': item_info[0], 'item_pic_url': 'www.duomaomao.com', 'title':item_info[0],'sub_title': item_info[6], 'text': item_info[3]} 
+    print '12121213333333333333'
+    item_info = get_item_by_id(item_id)
+    return {'item_id': item_info[7], 'item_pic_url': randint(1, 8), 'title':item_info[0],'sub_title': item_info[6], 'text': item_info[3]} 
 
-def get_item_cate(item_id):
-    return get_item(item_id)[5]
+def get_item_cate(item_title):
+    return get_item(item_title)[5]
 
 def items(request):
     response = None
@@ -47,7 +46,8 @@ def items(request):
             user_id = request.POST['user_id']
             item_id = request.POST['item_id']
             response = get_item_content(item_id)
-            cate_id = get_item_cate(item_id)
+            item_title = get_item_by_id(item_id)[0]
+            cate_id = get_item_cate(item_title)
             update_user_behavior(user_id, cate_id, 1)
         else:
             raise Http404()
@@ -61,8 +61,8 @@ def recommend_items(request):
         user_id = request.POST['user_id']
         recom = recommend(user_id)
         item_list = recom.get_recommend_items()
-        for item_id in item_list:
-            response.extend(get_item_info(item_id))
+        for item_title in item_list:
+            response.extend(get_item_info(item_title))
     return HttpResponse(json.dumps({'response':response}))
 
 def cate(request):
@@ -89,7 +89,8 @@ def edit_items(request):
             user_id = request.POST['user_id']
             item_id = request.POST['item_id'];
             text = request.POST['text']
-            if not update_items(item_id, text):
+            item_name = get_item_by_id(item_id)[0]
+            if not update_items(item_name, text):
                 return HttpResponse("OK")
             else:
                 return HttpResponse('Error')
@@ -97,3 +98,4 @@ def edit_items(request):
             raise Http404()
     else:
         raise Http404()
+

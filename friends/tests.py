@@ -18,7 +18,7 @@ class SimpleTest(TestCase):
 
     def test_post_search(self):
         self.client = Client()
-        response = self.client.post('/friends/search/', {'user_id':'fz'})
+        response = self.client.post('/friends/search/', {'user_id':'wl'})
         print json.loads(response.content)
 
     def test_post_follow(self):
