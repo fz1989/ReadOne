@@ -118,7 +118,7 @@ def get_item_by_id(item_id):
     '''
     get item name from id
 
-    @return item_name/None
+    @return (title,pic_index,summary,content,problem_question_list,cate_name,sub_title,id)/None
     '''
     try:
         item = Item.objects(id=item_id)[0] 
