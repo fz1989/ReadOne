@@ -104,12 +104,13 @@ def get_item(item_title):
     '''
     get item info from title
 
-    @return (title,pic_index,summary,content,problem_question_list,cate_name,sub_title)/None
+    @return (title,pic_index,summary,content,problem_question_list,cate_name,sub_title,id)/None
     '''
     try:
         item = Item.objects(title=item_title)[0] 
         return item.title, item.pic_index, item.summary, item.content,\
-                [prob.question for prob in item.problem], item.cate.cate_name ,item.sub_title
+                [prob.question for prob in item.problem], item.cate.cate_name,\
+                item.sub_title,item.id
     except:
         return None
 
