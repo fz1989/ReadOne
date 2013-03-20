@@ -114,6 +114,20 @@ def get_item(item_title):
     except:
         return None
 
+def get_item_by_id(item_id):
+    '''
+    get item name from id
+
+    @return item_name/None
+    '''
+    try:
+        item = Item.objects(id=item_id)[0] 
+        return item.title, item.pic_index, item.summary, item.content,\
+                [prob.question for prob in item.problem], item.cate.cate_name,\
+                item.sub_title,str(item.id)
+    except:
+        return None
+
 def set_content(item_title, content):
     '''
     set content

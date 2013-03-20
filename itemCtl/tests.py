@@ -49,6 +49,7 @@ class ItemTest(TestCase):
         self.assertTrue(add_item(u'足球',u's',1,u'简介',u'正文',catelist[0]))
         self.assertIsNotNone(get_item(u'足球'))
         print 'id = ',get_item(u'足球')[7]
+        self.assertEqual(get_item(u'足球'),get_item_by_id(get_item(u'足球')[7]))
         self.assertIsNone(get_item(u'篮球'))
 
     def test_del_item(self):
