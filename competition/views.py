@@ -6,12 +6,13 @@ import json
 from random import randint
 from userCtl.models import *
 from itemCtl.models import *
-
-waiting_list = []
-ready_list = []
-competition_dict = {}
-tot_dict = {}
-cate_vector = []
+from competition.data import *
+#waiting_list = []
+#ready_list = []
+#competition_dict = {}
+#tot_dict = {}
+#pre = 0
+#cate_vector = []
 def search_user_info(user_id):
     user_info = get_user(user_id)
     return {'user_name': user_info[0], 'items': user_info[4]}
@@ -133,6 +134,7 @@ def show_competition(request):
 
 def self_test(request):
     response = []
+    print prenum
     if request.method == 'POST' and 'user_id' in request.POST:
         user_id = request.POST['user_id']
         user_info = search_user_info(user_id)
@@ -140,6 +142,10 @@ def self_test(request):
         for item_id in user_item:
             problem = get_problem_by_item(item_id)
             response.extend(problem)
-        idx = randint(0, len(problem) - 1)
+        idx = randint(0, len(response) - 1)
+        if prenum == idx:
+            idx = randint(0, len(response) - 1)
+        print idx
+        pre = idx
         return HttpResponse(json.dumps(response[idx]))
 
